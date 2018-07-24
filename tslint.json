@@ -1,0 +1,24 @@
+{
+    "extends": ["tslint:recommended", "tslint-react", "tslint-config-prettier"],
+    "linterOptions": {
+        "exclude": [
+            "./public/",
+            "./node_modules/",
+            "./src/theme.js"
+        ]
+    },
+    "rules": {
+        "no-console": [
+            true,
+            {
+                "allow": [
+                    "warn",
+                    "error",
+                    "debug",
+                    "info"
+                ]
+            }
+        ],
+        "ordered-imports": false
+    }
+}

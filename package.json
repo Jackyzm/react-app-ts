@@ -1,0 +1,52 @@
+{
+    "name": "react-app-ts",
+    "version": "1.0.0",
+    "description": "react+ts",
+    "main": "index.tsx",
+    "scripts": {
+        "build": "rimraf dist && webpack --config webpack.prod.js --progress --profile",
+        "start": "webpack-dev-server --config webpack.dev.js --colors"
+    },
+    "author": "Jackyzm",
+    "license": "MIT",
+    "dependencies": {
+        "antd": "^3.7.1",
+        "mobx": "^5.0.3",
+        "mobx-react": "^5.2.3",
+        "react": "^16.4.1",
+        "react-dom": "^16.4.1",
+        "react-router-dom": "^4.3.1",
+        "typescript": "^2.9.2",
+        "whatwg-fetch": "^2.0.4"
+    },
+    "devDependencies": {
+        "@types/react": "^16.4.6",
+        "@types/react-dom": "^16.0.6",
+        "autoprefixer": "^9.0.1",
+        "copy-webpack-plugin": "^4.5.2",
+        "css-loader": "^1.0.0",
+        "extract-text-webpack-plugin": "^4.0.0-beta.0",
+        "file-loader": "^1.1.11",
+        "fork-ts-checker-webpack-plugin": "^0.4.3",
+        "html-loader": "^0.5.5",
+        "html-webpack-plugin": "^3.2.0",
+        "less": "^3.7.1",
+        "less-loader": "^4.1.0",
+        "postcss-flexbugs-fixes": "^4.0.0",
+        "postcss-loader": "^2.1.6",
+        "react-dev-utils": "^5.0.1",
+        "source-map-loader": "^0.2.3",
+        "style-loader": "^0.21.0",
+        "ts-import-plugin": "^1.5.4",
+        "ts-loader": "^4.4.2",
+        "tsconfig-paths-webpack-plugin": "^3.2.0",
+        "tslint": "^5.11.0",
+        "tslint-config-prettier": "^1.14.0",
+        "tslint-react": "^3.6.0",
+        "uglifyjs-webpack-plugin": "^1.2.7",
+        "webpack": "^4.16.1",
+        "webpack-cli": "^3.1.0",
+        "webpack-dev-server": "^3.1.5",
+        "webpack-merge": "^4.1.3"
+    }
+}
