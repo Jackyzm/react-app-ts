@@ -7,7 +7,7 @@
       "checkJs": true,   //是否对js文件开启静态检查，如果true的话，你的js文件中就可能很多红色的波浪线了。
       "jsx": "react",    //react工程必备
       "target": "es5",    //编译的目标语言，当然是最老的es5
-      "module": "es2015",   //模块引入方式，如果你想用import的话
+      "module": "ESNext",   //模块引入方式，如果你想用import的话
       "moduleResolution": "node",    //模块搜索方式，按照node的来，一般没有说明异议
       "allowSyntheticDefaultImports": true,   //允许从没有默认导出的模块进行默认导入。这不会影响代码发出，只会影响类型检查。
       "noImplicitAny": false,   //使用隐含的“any”类型警告表达式和声明。
@@ -16,7 +16,9 @@
       "removeComments": false,   // 删除注释，debug的时候不开启
       "preserveConstEnums": false,   // 不要在生成的代码中擦除const枚举声明
       "skipLibCheck": false,    // 跳过lib文件的静态检查，哎，不是所有的lib都给你写得规规整整的。
-      "experimentalDecorators": true   // 要实用装饰器语法的话，打开该项
+      "experimentalDecorators": true,   // 要实用装饰器语法的话，打开该项
+      "emitDecoratorMetadata": true,
+      "lib": ["es6", "dom"]
     },
     "include": [
       "./src/**/*"
