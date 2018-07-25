@@ -21,6 +21,7 @@
         ],
         "ordered-imports": false, // import 排序
         "object-literal-sort-keys": false, // obj key 排序
-        "jsx-no-lambda": false // 行内箭头函数
+        "jsx-no-lambda": false, // 行内箭头函数
+        "member-ordering": false
     }
 }
