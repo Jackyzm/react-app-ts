@@ -24,7 +24,7 @@ const commonConfig = {
         alias: {
             // 目录统一变量
             'img': path.resolve('public/img/'),
-            'components': path.resolve('src/components/'),
+            // 'components': path.resolve('src/components/'),
         },
         extensions: [ '.mjs', '.web.ts', '.ts', '.web.tsx', '.tsx', '.web.js', '.js', '.json', '.web.jsx', '.jsx', ],
         plugins: [

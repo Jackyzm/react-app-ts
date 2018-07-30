@@ -1,14 +1,17 @@
 import * as React from 'react';
-import { Layout, Menu, Icon } from 'antd';
+import { Link } from 'react-router-dom';
+import { Layout } from 'antd';
+import MyMenu from './components/MyMenu';
+import MyFooter from './components/MyFooter';
+import MyHeader from './components/MyHeader';
 import './App.less';
 
-const { SubMenu } = Menu;
-const { Header, Sider, Content } = Layout;
+const { Header, Sider, Content, Footer } = Layout;
 
 /**
  * @class Home
  */
-class Home extends React.Component<{}, { collapsed: boolean }> {
+class App extends React.Component<{}, { collapsed: boolean }> {
 
     /**
      * @param {*} props
@@ -31,49 +34,39 @@ class Home extends React.Component<{}, { collapsed: boolean }> {
                     collapsible={true}
                     collapsed={this.state.collapsed}
                 >
-                    <div className="logo" />
-                    <Menu
-                        theme="dark"
-                        mode="inline"
-                        defaultSelectedKeys={['1']}
-                    >
-                        <Menu.Item key="1">
-                            <Icon type="pie-chart" />
-                            <span>Option 1</span>
-                        </Menu.Item>
-                        <Menu.Item key="2">
-                            <Icon type="desktop" />
-                            <span>Option 2</span>
-                        </Menu.Item>
-                        <SubMenu key="sub2" title={<span><Icon type="user" /><span>User</span></span>}>
-                            <Menu.Item key="5">option5</Menu.Item>
-                            <Menu.Item key="6">option6</Menu.Item>
-                            <Menu.Item key="7">option7</Menu.Item>
-                            <Menu.Item key="8">option8</Menu.Item>
-                        </SubMenu>
-                        <SubMenu key="sub3" title={<span><Icon type="notification" /><span>大撒大撒</span></span>}>
-                            <Menu.Item key="9">option9</Menu.Item>
-                            <Menu.Item key="10">option10</Menu.Item>
-                            <Menu.Item key="11">option11</Menu.Item>
-                            <Menu.Item key="12">option12</Menu.Item>
-                        </SubMenu>
-                    </Menu>
+                    <div className={"logo"} key="logo">
+                        <Link to="/">
+                            <img src={'img/logo.svg'} alt="logo" />
+                            <h1>Ant Design Pro</h1>
+                        </Link>
+                    </div>
+                    <MyMenu/>
                 </Sider>
                 <Layout>
                     <Header style={{ background: '#fff', padding: 0 }}>
-                        <Icon
+                        {/* <Icon
                             className="trigger"
                             type={this.state.collapsed ? 'menu-unfold' : 'menu-fold'}
                             onClick={()=> this.onCollapse()}
+                        /> */}
+                        <MyHeader
+                            collapsed={this.state.collapsed}
+                            onCollapse={()=> this.onCollapse()}
+                            currentUser={{avatar: 'https://gw.alipayobjects.com/zos/rmsportal/BiazfanxmamNRoxxVxka.png', name: 'Serati Ma', notifyCount: 15}}
+                            onMenuClick={(key)=>console.debug(key)}
+                            // notices={notices}
                         />
                     </Header>
-                    <Content style={{ margin: '24px 16px', padding: 24, background: '#fff', minHeight: 280 }}>
+                    <Content style={{ margin: '24px 24px 0', height: '100%' }}>
                         Content
                     </Content>
+                    <Footer style={{padding: 0}}>
+                        <MyFooter/>
+                    </Footer>
                 </Layout>
             </Layout>
         );
     }
 }
 
-export default Home;
+export default App;

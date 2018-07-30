@@ -22,6 +22,8 @@
         "ordered-imports": false, // import 排序
         "object-literal-sort-keys": false, // obj key 排序
         "jsx-no-lambda": false, // 行内箭头函数
-        "member-ordering": false
+        "member-ordering": false, // 强制声明类型一致
+        // "no-unused-variable": [true, {"ignore-pattern": "pattern"}], // 禁止未使用的import
+        "no-string-literal": false // object不可以通过string访问
     }
 }

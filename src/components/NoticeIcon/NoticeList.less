@@ -1,0 +1,77 @@
+.listContent{
+    .list {
+        max-height: 400px;
+        overflow: auto;
+        .item {
+            transition: all 0.3s;
+            overflow: hidden;
+            cursor: pointer;
+            padding-left: 24px;
+            padding-right: 24px;
+
+            .meta {
+                width: 100%;
+            }
+
+            .avatar {
+                background: #fff;
+                margin-top: 4px;
+            }
+
+            &.read {
+                opacity: 0.4;
+            }
+            &:last-child {
+                border-bottom: 0;
+            }
+            &:hover {
+                background: #e6f7ff;
+            }
+            .title {
+                font-weight: normal;
+                margin-bottom: 8px;
+            }
+            .description {
+                font-size: 12px;
+                line-height: 22px;
+            }
+            .datetime {
+                font-size: 12px;
+                margin-top: 4px;
+                line-height: 1.5;
+            }
+            .extra {
+                float: right;
+                color: rgba(0,0,0,.45);
+                font-weight: normal;
+                margin-right: 0;
+                margin-top: -1.5px;
+            }
+        }
+    }
+    .clear {
+        height: 46px;
+        line-height: 46px;
+        text-align: center;
+        color: rgba(0,0,0,.65);
+        border-radius: 0 0 4px 4px;
+        border-top: 1px solid #e8e8e8;
+        transition: all 0.3s;
+        cursor: pointer;
+
+        &:hover {
+            color: rgba(0,0,0,.85);
+        }
+    }
+}
+
+.notFound {
+    text-align: center;
+    padding: 73px 0 88px 0;
+    color: rgba(0,0,0,.45);
+    img {
+        display: inline-block;
+        margin-bottom: 16px;
+        height: 76px;
+    }
+}
