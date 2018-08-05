@@ -1,102 +1,168 @@
 import React, { PureComponent } from 'react';
-import { Popover, Icon, Tabs, Badge, Spin } from 'antd';
-import classNames from 'classnames';
+import { Popover, Icon, Tabs, Badge, Spin, Tag } from 'antd';
+import moment from 'moment';
+import groupBy from 'lodash/groupBy';
 import List from './NoticeList';
-import styles from './index.less';
+import './index.less';
 
 const { TabPane } = Tabs;
 
-export default class NoticeIcon extends PureComponent {
-  static defaultProps = {
-    onItemClick: () => {},
-    onPopupVisibleChange: () => {},
-    onTabChange: () => {},
-    onClear: () => {},
-    loading: false,
-    locale: {
-      emptyText: '暂无数据',
-      clear: '清空',
-    },
-    emptyImage: 'https://gw.alipayobjects.com/zos/rmsportal/wAhyIChODzsoKIOBHcBk.svg',
-  };
-  static Tab = TabPane;
-  constructor(props) {
-    super(props);
-    this.state = {};
-    if (props.children && props.children[0]) {
-      this.state.tabType = props.children[0].props.title;
+interface IMyObj {
+    datetime?: string, key?:string, id: string, extra?: any, status?: string, avatar?: string, title: string, type: string, read?: boolean,  description?: string
+}
+export interface INoticeIconProps {
+    onItemClick: (item, tabProps)=>void,
+    onClear: (title:string)=>void,
+    onTabChange: (tabType: string)=>void,
+    locale: { emptyText: string, clear: string },
+    loading: boolean,
+    count: number,
+    className: string,
+    onPopupVisibleChange: ()=>void,
+    notices: IMyObj[]
+}
+
+export default class NoticeIcon extends PureComponent<INoticeIconProps, {tabType: string}> {
+    constructor(props) {
+        super(props);
+        this.state = {
+            tabType: props.children && props.children[0] ? props.children[0].props.title : ''
+        };
     }
-  }
-  onItemClick = (item, tabProps) => {
-    const { onItemClick } = this.props;
-    onItemClick(item, tabProps);
-  };
-  onTabChange = tabType => {
-    this.setState({ tabType });
-    this.props.onTabChange(tabType);
-  };
-  getNotificationBox() {
-    const { children, loading, locale } = this.props;
-    if (!children) {
-      return null;
+    private getNoticeData() {
+        const { notices } = this.props;
+        if (!notices.length) {
+            return {};
+        }
+        const newNotices = notices.map(notice => {
+            const newNotice = { ...notice };
+            if (newNotice.datetime) {
+                newNotice.datetime = moment(notice.datetime).fromNow();
+            }
+            // transform id to item key
+            if (newNotice.id) {
+                newNotice.key = newNotice.id;
+            }
+            if (newNotice.extra && newNotice.status) {
+                const color = {
+                    todo: '',
+                    processing: 'blue',
+                    urgent: 'red',
+                    doing: 'gold',
+                }[newNotice.status];
+                newNotice.extra = (
+                    <Tag color={color} style={{ marginRight: 0 }}>
+                        {newNotice.extra}
+                    </Tag>
+                );
+            }
+            return newNotice;
+        });
+        return groupBy(newNotices, 'type');
     }
-    const panes = React.Children.map(children, child => {
-      const title =
-        child.props.list && child.props.list.length > 0
-          ? `${child.props.title} (${child.props.list.length})`
-          : child.props.title;
-      return (
-        <TabPane tab={title} key={child.props.title}>
-          <List
-            {...child.props}
-            data={child.props.list}
-            onClick={item => this.onItemClick(item, child.props)}
-            onClear={() => this.props.onClear(child.props.title)}
-            title={child.props.title}
-            locale={locale}
-          />
-        </TabPane>
-      );
-    });
-    return (
-      <Spin spinning={loading} delay={0}>
-        <Tabs className={styles.tabs} onChange={this.onTabChange}>
-          {panes}
-        </Tabs>
-      </Spin>
-    );
-  }
-  render() {
-    const { className, count, popupAlign, onPopupVisibleChange } = this.props;
-    const noticeButtonClass = classNames(className, styles.noticeButton);
-    const notificationBox = this.getNotificationBox();
-    const trigger = (
-      <span className={noticeButtonClass}>
-        <Badge count={count} className={styles.badge}>
-          <Icon type="bell" className={styles.icon} />
-        </Badge>
-      </span>
-    );
-    if (!notificationBox) {
-      return trigger;
+    private onItemClick = (item, tabProps) => {
+        const { onItemClick } = this.props;
+        onItemClick(item, tabProps);
+    };
+    private onTabChange = tabType => {
+        console.debug(tabType);
+        this.setState({ tabType });
+        this.props.onTabChange(tabType);
+    };
+    private getNotificationBox() {
+        const { loading, locale } = this.props;
+        const noticeData = this.getNoticeData();
+
+        // <NoticeIcon.Tab
+        //     list={noticeData['通知']}
+        //     title="通知"
+        //     emptyText="你已查看所有通知"
+        //     emptyImage="https://gw.alipayobjects.com/zos/rmsportal/wAhyIChODzsoKIOBHcBk.svg"
+        // />
+        // <NoticeIcon.Tab
+        //     list={noticeData['消息']}
+        //     title="消息"
+        //     emptyText="您已读完所有消息"
+        //     emptyImage="https://gw.alipayobjects.com/zos/rmsportal/sAuJeJzSKbUmHfBQRzmZ.svg"
+        // />
+        // <NoticeIcon.Tab
+        //     list={noticeData['待办']}
+        //     title="待办"
+        //     emptyText="你已完成所有待办"
+        //     emptyImage="https://gw.alipayobjects.com/zos/rmsportal/HsIsxMZiWKrNUavQUXqx.svg"
+        // />
+        const dataList = [
+            {
+                list: noticeData['通知'],
+                title: "通知",
+                emptyText: "你已查看所有通知",
+                emptyImage: "https://gw.alipayobjects.com/zos/rmsportal/wAhyIChODzsoKIOBHcBk.svg"
+            },
+            {
+                list: noticeData['消息'],
+                title: "消息",
+                emptyText: "您已读完所有消息",
+                emptyImage: "https://gw.alipayobjects.com/zos/rmsportal/sAuJeJzSKbUmHfBQRzmZ.svg"
+            },
+            {
+                list: noticeData['待办'],
+                title: "待办",
+                emptyText: "你已完成所有待办",
+                emptyImage: "https://gw.alipayobjects.com/zos/rmsportal/HsIsxMZiWKrNUavQUXqx.svg"
+            },
+        ];
+        const panes = dataList.map((item) => {
+            const title =
+                    item.list && item.list.length > 0
+                    ? `${item.title} (${item.list.length})`
+                    : item.title;
+            return (
+                <TabPane tab={title} key={item.title}>
+                    <List
+                        {...item}
+                        data={item.list}
+                        onClick={value => this.onItemClick(value, item)}
+                        onClear={() => this.props.onClear(item.title)}
+                        title={item.title}
+                        locale={locale}
+                    />
+                </TabPane>
+            );
+        });
+        return (
+            <Spin spinning={loading} delay={0}>
+                <Tabs className={'tabs'} onChange={this.onTabChange}>
+                    {panes}
+                </Tabs>
+            </Spin>
+        );
     }
-    const popoverProps = {};
-    if ('popupVisible' in this.props) {
-      popoverProps.visible = this.props.popupVisible;
+    public render() {
+        const { count } = this.props;
+        const notificationBox = this.getNotificationBox();
+        const trigger = (
+            <span className={'noticeButton'}>
+                <Badge count={count} className={'badge'}>
+                    <Icon type="bell" className={'icon'} />
+                </Badge>
+            </span>
+        );
+        if (!notificationBox) {
+            return trigger;
+        }
+
+        return (
+            <Popover
+                placement="bottomRight"
+                content={notificationBox}
+                trigger="click"
+                arrowPointAtCenter={true}
+                // popupAlign={this.props.popupAlign}
+                onVisibleChange={this.props.onPopupVisibleChange}
+                // {...popoverProps}
+            >
+                {trigger}
+            </Popover>
+        );
     }
-    return (
-      <Popover
-        placement="bottomRight"
-        content={notificationBox}
-        popupClassName={styles.popover}
-        trigger="click"
-        arrowPointAtCenter
-        popupAlign={popupAlign}
-        onVisibleChange={onPopupVisibleChange}
-        {...popoverProps}
-      >
-        {trigger}
-      </Popover>
-    );
-  }
 }

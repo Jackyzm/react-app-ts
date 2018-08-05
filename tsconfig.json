@@ -21,6 +21,7 @@
       "lib": ["es6", "dom"]
     },
     "include": [
-      "./src/**/*"
+    //   "./src/**/*"
+        "./src/index.tsx"
     ]
 }

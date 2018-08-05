@@ -44,17 +44,13 @@ class App extends React.Component<{}, { collapsed: boolean }> {
                 </Sider>
                 <Layout>
                     <Header style={{ background: '#fff', padding: 0 }}>
-                        {/* <Icon
-                            className="trigger"
-                            type={this.state.collapsed ? 'menu-unfold' : 'menu-fold'}
-                            onClick={()=> this.onCollapse()}
-                        /> */}
                         <MyHeader
                             collapsed={this.state.collapsed}
                             onCollapse={()=> this.onCollapse()}
                             currentUser={{avatar: 'https://gw.alipayobjects.com/zos/rmsportal/BiazfanxmamNRoxxVxka.png', name: 'Serati Ma', notifyCount: 15}}
                             onMenuClick={(key)=>console.debug(key)}
-                            // notices={notices}
+                            onNoticeVisibleChange={()=>console.debug('123')}
+                            onNoticeClear={()=>console.debug('123')}
                         />
                     </Header>
                     <Content style={{ margin: '24px 24px 0', height: '100%' }}>

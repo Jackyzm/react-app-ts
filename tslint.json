@@ -24,6 +24,7 @@
         "jsx-no-lambda": false, // 行内箭头函数
         "member-ordering": false, // 强制声明类型一致
         // "no-unused-variable": [true, {"ignore-pattern": "pattern"}], // 禁止未使用的import
-        "no-string-literal": false // object不可以通过string访问
+        "no-string-literal": false, // object不可以通过string访问
+        "array-type": false
     }
 }

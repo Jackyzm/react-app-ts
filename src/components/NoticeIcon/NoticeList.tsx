@@ -32,7 +32,7 @@ class NoticeList extends React.Component<INoticeListProps>{
                     dataSource={data}
                     renderItem={(item, index) => (
                         <List.Item className={item.read ? 'item read' : 'item'} key={item.key || index} >
-                            <div onClick={() => onClick(item)}>
+                            <div style={{width: '100%'}} onClick={() => onClick(item)}>
                                 <List.Item.Meta
                                     className={'meta'}
                                     avatar={item.avatar ? <Avatar className={'avatar'} src={item.avatar} /> : null}
