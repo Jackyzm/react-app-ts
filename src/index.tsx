@@ -16,7 +16,7 @@ ReactDOM.render(
         <Router>
             <LocaleProvider locale={zhCN}>
                 <Switch>
-                    <Route exact={true} path='/' component={App}/>
+                    <Route path='/' component={App}/>
                     <Route exact={true} path='/test' component={Test}/>
                 </Switch>
             </LocaleProvider>

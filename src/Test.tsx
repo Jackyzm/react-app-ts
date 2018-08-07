@@ -4,15 +4,15 @@ import { Link } from 'react-router-dom';
 import { observer, inject } from 'mobx-react';
 
 /**
- * @class App
+ * @class Test
  * @extends {React.Component}
  */
-@inject( (store: {App}) => {
+@inject( (store: {Home}) => {
     return {
-        num: store.App.num,
-        addNum: store.App.addNum,
-        cutNum: store.App.cutNum,
-        list: store.App.list,
+        num: store.Home.num,
+        addNum: store.Home.addNum,
+        cutNum: store.Home.cutNum,
+        list: store.Home.list,
     }
 })
 @observer

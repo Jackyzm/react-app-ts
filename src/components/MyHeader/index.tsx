@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import { Menu, Icon, Spin, Dropdown, Avatar, Tooltip, Tag } from 'antd';
+import { observer, inject } from 'mobx-react';
 // import { Link } from 'react-router-dom';
 import NoticeIcon from '../NoticeIcon';
 import HeaderSearch from '../HeaderSearch';
@@ -106,11 +107,22 @@ export interface IMyHeaderProps {
     onMenuClick: (key)=>void,
     onNoticeClear: ()=>void,
     onNoticeVisibleChange: ()=>void,
+    getHeaderNotice?: ()=>void
 };
 
-class MyHeader extends PureComponent<IMyHeaderProps, {}> {
-    public componentWillUnmount() {
-        // this.triggerResizeEvent.cancel();
+@inject( (store: {App}) => {
+    return {
+        list: store.App.list,
+        getHeaderNotice: store.App.getHeaderNotice
+    }
+})
+@observer
+class MyHeader extends React.Component<IMyHeaderProps, {}> {
+    public componentWillMount() {
+        console.debug(this.props);
+        if (this.props.getHeaderNotice) {
+            this.props.getHeaderNotice();
+        }
     }
 
     private toggle = () => {

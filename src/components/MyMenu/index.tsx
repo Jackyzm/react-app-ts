@@ -4,15 +4,10 @@ import { Menu, Icon } from 'antd';
 import menuData from './menu';
 
 const { SubMenu } = Menu;
-
 /**
  * @class MyMenu
  */
 class MyMenu extends React.Component {
-    /**
-     * @param {*} props
-     * @memberof Home
-     */
     constructor(props) {
         super(props);
         this.state = {
@@ -27,7 +22,7 @@ class MyMenu extends React.Component {
                 defaultSelectedKeys={['1']}
             >
             {
-                menuData.map((item: { children: Array<object | null>, icon: string, name: string, path: string }, index: number)=>{
+                menuData.map((item: { children: [{name: string, path: string, hideInMenu?: boolean}], icon: string, name: string, path: string }, index: number)=>{
                     if (!item.children) {
                         return (
                             <Menu.Item key={index}>
@@ -42,7 +37,7 @@ class MyMenu extends React.Component {
                                     item.children.map((value: { path: string, name: string }, num: number)=>{
                                         return (
                                             <Menu.Item key={`${index}${num}`}>
-                                                <Link to={`${item.path}/${value.path}`}>
+                                                <Link to={`/${item.path}/${value.path}`}>
                                                     <span>{value.name}</span>
                                                 </Link>
                                             </Menu.Item>

@@ -4,6 +4,7 @@ import { Layout } from 'antd';
 import MyMenu from './components/MyMenu';
 import MyFooter from './components/MyFooter';
 import MyHeader from './components/MyHeader';
+import MainPages from './routes/MainPages';
 import './App.less';
 
 const { Header, Sider, Content, Footer } = Layout;
@@ -54,7 +55,7 @@ class App extends React.Component<{}, { collapsed: boolean }> {
                         />
                     </Header>
                     <Content style={{ margin: '24px 24px 0', height: '100%' }}>
-                        Content
+                        <MainPages/>
                     </Content>
                     <Footer style={{padding: 0}}>
                         <MyFooter/>

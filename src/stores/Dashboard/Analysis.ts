@@ -2,7 +2,7 @@ import { observable, action } from 'mobx';
 /**
  * @class home
  */
-class App {
+class Analysis {
     @observable public num = 0;
     @observable public list = [];
 
@@ -11,10 +11,6 @@ class App {
         this.num = num+1;
     }
 
-    @action public cutNum = (num: number) => {
-        this.list = ['1', '2', '3'];
-        this.num = num-1;
-    }
 }
 
-export default new App();
+export default new Analysis();

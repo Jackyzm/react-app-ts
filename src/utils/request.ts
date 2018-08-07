@@ -42,11 +42,15 @@ function checkStatus(response) {
  * @param  {object} [options] The options we want to pass to "fetch"
  * @return {object}           An object containing either "data" or "err"
  */
-export default function request(url, options) {
+interface IMyOptionObj {
+    method?: string, body?: any, headers?: any, credentials?: any
+}
+
+export default function request(url: string, options: object) {
     const defaultOptions = {
         credentials: 'include',
     };
-    const newOptions = { ...defaultOptions, ...options };
+    const newOptions: IMyOptionObj = { ...defaultOptions, ...options };
     if (newOptions.method === 'POST' || newOptions.method === 'PUT') {
         if (!(newOptions.body instanceof FormData)) {
             newOptions.headers = {
@@ -68,9 +72,9 @@ export default function request(url, options) {
         .then(checkStatus)
         .then(response => {
             if (newOptions.method === 'DELETE' || response.status === 204) {
-                return response.text();
+                return Promise.resolve(response.text());
             }
-            return response.json();
+            return Promise.resolve(response.json());
         })
         .catch(err => {
             // const { dispatch } = store;

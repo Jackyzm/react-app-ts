@@ -29,19 +29,11 @@ const config = {
         inline: true,
         // progress: true,
         port,
-        proxy: [{
-            context: [
-                '/api',
-            ],
-            target: '',
-            secure: false
-        }, {
-            context: [
-                '/websocket'
-            ],
-            target: 'ws://127.0.0.1:8080',
-            ws: true
-        }]
+        proxy: {
+            '/api':{
+                target: 'http://localhost:9000'
+            }
+        }
     },
     module:{
         rules: [
