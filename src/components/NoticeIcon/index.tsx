@@ -7,7 +7,7 @@ import './index.less';
 
 const { TabPane } = Tabs;
 
-interface IMyObj {
+export interface IMyObj {
     datetime?: string, key?:string, id: string, extra?: any, status?: string, avatar?: string, title: string, type: string, read?: boolean,  description?: string
 }
 export interface INoticeIconProps {
@@ -31,7 +31,7 @@ export default class NoticeIcon extends PureComponent<INoticeIconProps, {tabType
     }
     private getNoticeData() {
         const { notices } = this.props;
-        if (!notices.length) {
+        if (!notices || !notices.length) {
             return {};
         }
         const newNotices = notices.map(notice => {

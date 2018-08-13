@@ -17,7 +17,7 @@ class NoticeList extends React.Component<INoticeListProps>{
     }
     public render() {
         const { data, emptyImage, emptyText, locale, onClick, onClear, title } = this.props;
-        if (!data.length) {
+        if (!data || !data.length) {
             return (
                 <div className={'notFound'}>
                     {emptyImage ? <img src={emptyImage} alt="not found" /> : null}

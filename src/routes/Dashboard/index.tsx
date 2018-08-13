@@ -1,14 +1,12 @@
 import * as React from 'react';
 import { Route, Switch } from 'react-router-dom';
 
-import DashboardAnalysis from './DashboardAnalysis';
-
-import './index.less';
+import Analysis from './Analysis';
 
 const PARENT_URL = '/dashboard';
 
 const routeMap = [
-    { name: '分析页', path: `${PARENT_URL}/analysis`, component: DashboardAnalysis },
+    { name: '分析页', path: `${PARENT_URL}/analysis`, component: Analysis },
     // { name: '监控页', path: `${PARENT_URL}/monitor` },
     // { name: '工作台', path: `${PARENT_URL}/workplace` },
 ]
@@ -18,11 +16,13 @@ const routeMap = [
  */
 class Dashboard extends React.Component {
     public render() {
-        return <div className='Dashboard'>
-                <Switch>
-                    {routeMap.map((item, index) => <Route key={index} exact={true} path={item.path} name={item.name} component={item.component} />)}
-                </Switch>
-        </div>;
+        return(
+            <div className='Dashboard'>
+                    <Switch>
+                        {routeMap.map((item, index) => <Route key={index} exact={true} path={item.path} name={item.name} component={item.component} />)}
+                    </Switch>
+            </div>
+        );
     }
 }
 

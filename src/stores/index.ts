@@ -1,7 +1,9 @@
 import Home from './Home';
-import App from './App';
+import Header from './Header';
+import Analysis from './Dashboard/Analysis';
 
 export default {
     Home,
-    App
+    Header,
+    Analysis
 };

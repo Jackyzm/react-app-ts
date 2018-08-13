@@ -3,14 +3,15 @@ import { getNotice } from '../utils/api';
 /**
  * @class home
  */
-class App {
+class Header {
     @observable public list = [];
 
     @action public getHeaderNotice = () => {
         getNotice().then((res)=>{
+            this.list = res;
             console.debug(res);
         });
     };
 }
 
-export default new App();
+export default new Header();

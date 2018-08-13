@@ -2,6 +2,9 @@
 import request from './request';
 
 export async function getNotice() {
-    let result;
-    return result = await request('/api/notices', {});
+    return await request('/api/notices', {});
+}
+
+export async function getCharts() {
+    return await request('/api/charts', {});
 }

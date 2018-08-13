@@ -1,14 +1,17 @@
 import { observable, action } from 'mobx';
+import { getCharts } from '../../utils/api';
+
 /**
  * @class home
  */
 class Analysis {
-    @observable public num = 0;
-    @observable public list = [];
+    @observable public chart = {};
 
-    @action public addNum = (num: number) => {
-        this.list = ['1', '2', '3'];
-        this.num = num+1;
+    @action public getChartsData = () => {
+        getCharts().then((res)=>{
+            console.debug(res);
+            this.chart = res;
+        })
     }
 
 }

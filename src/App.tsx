@@ -54,7 +54,7 @@ class App extends React.Component<{}, { collapsed: boolean }> {
                             onNoticeClear={()=>console.debug('123')}
                         />
                     </Header>
-                    <Content style={{ margin: '24px 24px 0', height: '100%' }}>
+                    <Content style={{ margin: '24px 24px 0' }}>
                         <MainPages/>
                     </Content>
                     <Footer style={{padding: 0}}>
