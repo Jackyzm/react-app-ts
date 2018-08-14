@@ -37,11 +37,12 @@ interface IAnalysisColumns {
 @inject( (store: {Analysis}) => {
     return {
         chart: store.Analysis.chart,
-        getChartsData: store.Analysis.getChartsData
+        getChartsData: store.Analysis.getChartsData,
+        clearChartsData: store.Analysis.clearChartsData,
     }
 })
 @observer
-export default class DashboardAnalysis extends Component<{chart, loading: boolean, getChartsData: ()=>void}, {rangePickerValue, salesType, currentTabKey}> {
+export default class DashboardAnalysis extends Component<{chart, loading: boolean, getChartsData: ()=>void, clearChartsData: ()=>void}, {rangePickerValue, salesType, currentTabKey}> {
     constructor(props) {
         super(props);
         this.state = {
@@ -56,10 +57,7 @@ export default class DashboardAnalysis extends Component<{chart, loading: boolea
     }
 
     public componentWillUnmount() {
-        // const { dispatch } = this.props;
-        // dispatch({
-        //     type: 'chart/clear',
-        // });
+        this.props.clearChartsData();
     }
 
     private handleChangeSalesType = e => {
@@ -79,9 +77,7 @@ export default class DashboardAnalysis extends Component<{chart, loading: boolea
             rangePickerValue,
         });
 
-        // this.props.dispatch({
-        //     type: 'chart/fetchSalesData',
-        // });
+        this.props.getChartsData();
     };
 
     private selectDate = type => {
@@ -89,9 +85,7 @@ export default class DashboardAnalysis extends Component<{chart, loading: boolea
             rangePickerValue: getTimeDistance(type),
         });
 
-        // this.props.dispatch({
-        //     type: 'chart/fetchSalesData',
-        // });
+        this.props.getChartsData();
     };
 
     private isActive(type) {

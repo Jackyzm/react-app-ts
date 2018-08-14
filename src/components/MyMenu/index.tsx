@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { Menu, Icon } from 'antd';
 import menuData from './menu';
 
@@ -37,9 +37,9 @@ class MyMenu extends React.Component {
                                     item.children.map((value: { path: string, name: string }, num: number)=>{
                                         return (
                                             <Menu.Item key={`${index}${num}`}>
-                                                <Link to={`/${item.path}/${value.path}`}>
+                                                <NavLink to={`/${item.path}/${value.path}`}>
                                                     <span>{value.name}</span>
-                                                </Link>
+                                                </NavLink>
                                             </Menu.Item>
                                         );
                                     })
