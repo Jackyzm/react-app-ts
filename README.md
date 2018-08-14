@@ -1,9 +1,12 @@
 # react-app
-从头开始配置一个react项目 学习项目中的各种配置 webpack4各种坑 react+ts+mobx 欢迎交流学习
+从头开始配置一个react项目 react+ts+mobx 欢迎交流学习
 
 ## 启动项目
 ```sh
 $ npm install
+```
+```sh
+$ node .\server\server.js
 ```
 ```sh
 $ npm run start
