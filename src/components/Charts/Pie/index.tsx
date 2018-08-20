@@ -219,7 +219,7 @@ class Pie extends React.Component<IPieProps, {legendData?, legendBlock?:boolean,
             dimension: 'x',
             as: 'percent',
         });
-        console.debug(dv);
+        // console.debug(dv);
         return (
             <div ref={this.handleRoot} className={`pie ${!!hasLegend? 'hasLegend':''} ${legendBlock? 'legendBlock':''}`} style={style}>
                 <ReactFitText maxFontSize={25}>

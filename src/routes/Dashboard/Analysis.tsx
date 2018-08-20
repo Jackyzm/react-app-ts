@@ -453,11 +453,14 @@ export default class DashboardAnalysis extends Component<{chart, loading: boolea
                         {offlineData && offlineData.map(shop => (
                             <TabPane tab={<CustomTab data={shop} currentTabKey={activeKey} />} key={shop.name}>
                                 <div style={{ padding: '0 24px' }}>
-                                    <TimelineChart
-                                        height={400}
-                                        data={offlineChartData}
-                                        titleMap={{ y1: '客流量', y2: '支付笔数' }}
-                                    />
+                                    {
+                                        offlineChartData ?
+                                        <TimelineChart
+                                            height={400}
+                                            data={offlineChartData}
+                                            titleMap={{ y1: '客流量', y2: '支付笔数' }}
+                                        /> : ''
+                                    }
                                 </div>
                             </TabPane>
                         ))}

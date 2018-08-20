@@ -27,7 +27,7 @@ export interface IMyHeaderProps {
 @observer
 class MyHeader extends React.Component<IMyHeaderProps, {}> {
     public componentWillMount() {
-        console.debug(this.props);
+        // console.debug(this.props);
         if (this.props.getHeaderNotice) {
             this.props.getHeaderNotice();
         }

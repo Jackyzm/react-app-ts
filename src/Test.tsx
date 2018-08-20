@@ -19,7 +19,7 @@ import { observer, inject } from 'mobx-react';
 class Test extends React.Component<{num: number, addNum: (num: number) => void, cutNum: (num: number) => void, list }, {}> {
     public render() {
         const { num, addNum, cutNum, list } = this.props;
-        console.debug(this.props, list);
+        // console.debug(this.props, list);
         return (
             <div className="App">
                 <header className="App-header">

@@ -9,7 +9,7 @@ class Analysis {
 
     @action public getChartsData = () => {
         getCharts().then((res)=>{
-            console.debug(res);
+            // console.debug(res);
             if (res) {
                 this.chart = res;
             }

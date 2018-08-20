@@ -30,13 +30,7 @@ export default class TimelineChart extends React.Component<ITimelineChartProps, 
                 y2: 'y2',
             },
             borderWidth = 2,
-            data = [
-                {
-                    x: 0,
-                    y1: 0,
-                    y2: 0,
-                },
-            ],
+            data,
         } = this.props;
 
         data.sort((a, b) => a.x - b.x);

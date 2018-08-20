@@ -18,7 +18,7 @@ export interface IMiniBarProps {
 export default class MiniBar extends React.Component<IMiniBarProps> {
     public render() {
         const { height, forceFit = true, color = '#1890FF', data } = this.props;
-        console.debug(data);
+        // console.debug(data);
         const scale = {
             x: {
                 type: 'cat',
