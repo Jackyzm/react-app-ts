@@ -12,7 +12,7 @@ export interface INumberInfoProps {
   gap?: number;
   subTotal?: number;
   style?: React.CSSProperties;
-  suffix?: number
+  suffix?: number | string
 }
 
 class NumberInfo extends React.Component<INumberInfoProps> {

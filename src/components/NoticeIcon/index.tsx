@@ -65,7 +65,6 @@ export default class NoticeIcon extends PureComponent<INoticeIconProps, {tabType
         onItemClick(item, tabProps);
     };
     private onTabChange = tabType => {
-        console.debug(tabType);
         this.setState({ tabType });
         this.props.onTabChange(tabType);
     };
@@ -73,24 +72,6 @@ export default class NoticeIcon extends PureComponent<INoticeIconProps, {tabType
         const { loading, locale } = this.props;
         const noticeData = this.getNoticeData();
 
-        // <NoticeIcon.Tab
-        //     list={noticeData['通知']}
-        //     title="通知"
-        //     emptyText="你已查看所有通知"
-        //     emptyImage="https://gw.alipayobjects.com/zos/rmsportal/wAhyIChODzsoKIOBHcBk.svg"
-        // />
-        // <NoticeIcon.Tab
-        //     list={noticeData['消息']}
-        //     title="消息"
-        //     emptyText="您已读完所有消息"
-        //     emptyImage="https://gw.alipayobjects.com/zos/rmsportal/sAuJeJzSKbUmHfBQRzmZ.svg"
-        // />
-        // <NoticeIcon.Tab
-        //     list={noticeData['待办']}
-        //     title="待办"
-        //     emptyText="你已完成所有待办"
-        //     emptyImage="https://gw.alipayobjects.com/zos/rmsportal/HsIsxMZiWKrNUavQUXqx.svg"
-        // />
         const dataList = [
             {
                 list: noticeData['通知'],

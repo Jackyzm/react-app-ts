@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { observer, inject } from 'mobx-react';
 import { Link } from 'react-router-dom';
-import { Layout } from 'antd';
+import { Layout, message } from 'antd';
 import MyMenu from './components/MyMenu';
 import MyFooter from './components/MyFooter';
 import MyHeader from './components/MyHeader';
@@ -15,11 +15,12 @@ const { Header, Sider, Content, Footer } = Layout;
  */
 @inject( (store: {Header}) => {
     return {
-        changeFetchNotice: store.Header.changeFetchNotice
+        changeFetchNotice: store.Header.changeFetchNotice,
+        clearNotices: store.Header.clearNotices,
     }
 })
 @observer
-class App extends React.Component<{changeFetchNotice:()=>void}, { collapsed: boolean }> {
+class App extends React.Component<{changeFetchNotice:()=>void, clearNotices: (type:string)=>void}, { collapsed: boolean }> {
 
     /**
      * @param {*} props
@@ -36,6 +37,10 @@ class App extends React.Component<{changeFetchNotice:()=>void}, { collapsed: boo
     }
     private handleNoticeVisibleChange() {
         this.props.changeFetchNotice();
+    };
+    private handleNoticeClear = type => {
+        message.success(`清空了${type}`);
+        this.props.clearNotices(type);
     };
     public render() {
         return (
@@ -58,10 +63,10 @@ class App extends React.Component<{changeFetchNotice:()=>void}, { collapsed: boo
                         <MyHeader
                             collapsed={this.state.collapsed}
                             onCollapse={()=> this.onCollapse()}
-                            currentUser={{avatar: 'https://gw.alipayobjects.com/zos/rmsportal/BiazfanxmamNRoxxVxka.png', name: 'Serati Ma', notifyCount: 15}}
+                            // currentUser={{avatar: 'https://gw.alipayobjects.com/zos/rmsportal/BiazfanxmamNRoxxVxka.png', name: 'Serati Ma', notifyCount: 15}}
                             onMenuClick={(key)=>console.debug(key)}
                             onNoticeVisibleChange={()=> this.handleNoticeVisibleChange()}
-                            onNoticeClear={()=>console.debug('123')}
+                            onNoticeClear={(type)=> this.handleNoticeClear(type)}
                         />
                     </Header>
                     <Content style={{ margin: '24px 24px 0' }}>

@@ -10,17 +10,21 @@ import './index.less';
 export interface IMyHeaderProps {
     collapsed: boolean,
     onCollapse: (collapsed:boolean)=> void,
-    currentUser: {name: string, avatar:string, notifyCount: number},
+    // currentUser: {name: string, avatar:string, notifyCount: number},
     onMenuClick: (key)=>void,
-    onNoticeClear: ()=>void,
+    onNoticeClear: (type:string)=>void,
     onNoticeVisibleChange: ()=>void,
     getHeaderNotice?: ()=>void,
     list?: IMyObj[],
     fetchNotice?: boolean,
+    getUserCurrentData?: ()=>void,
+    userCurrent?: {name: string, avatar:string, notifyCount: number},
 };
 
 @inject( (store: {Header}) => {
     return {
+        userCurrent: store.Header.userCurrent,
+        getUserCurrentData: store.Header.getUserCurrentData,
         list: store.Header.list,
         fetchNotice: store.Header.fetchNotice,
         getHeaderNotice: store.Header.getHeaderNotice
@@ -32,6 +36,9 @@ class MyHeader extends React.Component<IMyHeaderProps, {}> {
         // console.debug(this.props);
         if (this.props.getHeaderNotice) {
             this.props.getHeaderNotice();
+        }
+        if (this.props.getUserCurrentData) {
+            this.props.getUserCurrentData();
         }
     }
 
@@ -49,9 +56,8 @@ class MyHeader extends React.Component<IMyHeaderProps, {}> {
     // }
     public render() {
         const {
-            currentUser,
+            userCurrent,
             collapsed,
-            // fetchingNotices,
             onNoticeVisibleChange,
             onMenuClick,
             onNoticeClear,
@@ -110,11 +116,11 @@ class MyHeader extends React.Component<IMyHeaderProps, {}> {
                     </Tooltip>
                     <NoticeIcon
                         className={'action'}
-                        count={currentUser.notifyCount}
+                        count={userCurrent.notifyCount || 0}
                         onItemClick={(item, tabProps) => {
                             console.log(item, tabProps); // eslint-disable-line
                         }}
-                        onClear={onNoticeClear}
+                        onClear={(type)=> onNoticeClear(type)}
                         onPopupVisibleChange={onNoticeVisibleChange}
                         // popupAlign={{ offset: [20, -16] }}
                         locale = {{
@@ -124,32 +130,13 @@ class MyHeader extends React.Component<IMyHeaderProps, {}> {
                         loading= {fetchNotice}
                         onTabChange={()=>console.debug('11')}
                         notices={list}
-                    >
-                        {/* <NoticeIcon.Tab
-                            list={noticeData['通知']}
-                            title="通知"
-                            emptyText="你已查看所有通知"
-                            emptyImage="https://gw.alipayobjects.com/zos/rmsportal/wAhyIChODzsoKIOBHcBk.svg"
-                        />
-                        <NoticeIcon.Tab
-                            list={noticeData['消息']}
-                            title="消息"
-                            emptyText="您已读完所有消息"
-                            emptyImage="https://gw.alipayobjects.com/zos/rmsportal/sAuJeJzSKbUmHfBQRzmZ.svg"
-                        />
-                        <NoticeIcon.Tab
-                            list={noticeData['待办']}
-                            title="待办"
-                            emptyText="你已完成所有待办"
-                            emptyImage="https://gw.alipayobjects.com/zos/rmsportal/HsIsxMZiWKrNUavQUXqx.svg"
-                        /> */}
-                    </NoticeIcon>
+                    />
 
-                    {currentUser.name ? (
+                    {userCurrent.name ? (
                         <Dropdown overlay={menu}>
                             <span className={'action account'}>
-                                <Avatar size="small" className={'avatar'} src={currentUser.avatar} />
-                                <span className={'name'}>{currentUser.name}</span>
+                                <Avatar size="small" className={'avatar'} src={userCurrent.avatar} />
+                                <span className={'name'}>{userCurrent.name}</span>
                             </span>
                         </Dropdown>
                     ) : (

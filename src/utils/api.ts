@@ -8,3 +8,7 @@ export async function getNotice() {
 export async function getCharts() {
     return await request('/api/charts', {});
 }
+
+export async function getUserCurrent() {
+    return await request('/api/userCurrent', {});
+}
