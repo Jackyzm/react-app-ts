@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { observer, inject } from 'mobx-react';
 import { Link } from 'react-router-dom';
 import { Layout } from 'antd';
 import MyMenu from './components/MyMenu';
@@ -12,7 +13,13 @@ const { Header, Sider, Content, Footer } = Layout;
 /**
  * @class Home
  */
-class App extends React.Component<{}, { collapsed: boolean }> {
+@inject( (store: {Header}) => {
+    return {
+        changeFetchNotice: store.Header.changeFetchNotice
+    }
+})
+@observer
+class App extends React.Component<{changeFetchNotice:()=>void}, { collapsed: boolean }> {
 
     /**
      * @param {*} props
@@ -27,6 +34,9 @@ class App extends React.Component<{}, { collapsed: boolean }> {
     private onCollapse() {
         this.setState({ collapsed: !this.state.collapsed });
     }
+    private handleNoticeVisibleChange() {
+        this.props.changeFetchNotice();
+    };
     public render() {
         return (
             <Layout>
@@ -50,7 +60,7 @@ class App extends React.Component<{}, { collapsed: boolean }> {
                             onCollapse={()=> this.onCollapse()}
                             currentUser={{avatar: 'https://gw.alipayobjects.com/zos/rmsportal/BiazfanxmamNRoxxVxka.png', name: 'Serati Ma', notifyCount: 15}}
                             onMenuClick={(key)=>console.debug(key)}
-                            onNoticeVisibleChange={()=>console.debug('123')}
+                            onNoticeVisibleChange={()=> this.handleNoticeVisibleChange()}
                             onNoticeClear={()=>console.debug('123')}
                         />
                     </Header>

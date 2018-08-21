@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import * as React from 'react';
 import { Menu, Icon, Spin, Dropdown, Avatar, Tooltip, Tag } from 'antd';
 import { observer, inject } from 'mobx-react';
 // import { Link } from 'react-router-dom';
@@ -16,11 +16,13 @@ export interface IMyHeaderProps {
     onNoticeVisibleChange: ()=>void,
     getHeaderNotice?: ()=>void,
     list?: IMyObj[],
+    fetchNotice?: boolean,
 };
 
 @inject( (store: {Header}) => {
     return {
         list: store.Header.list,
+        fetchNotice: store.Header.fetchNotice,
         getHeaderNotice: store.Header.getHeaderNotice
     }
 })
@@ -54,6 +56,7 @@ class MyHeader extends React.Component<IMyHeaderProps, {}> {
             onMenuClick,
             onNoticeClear,
             list,
+            fetchNotice
         } = this.props;
         const menu = (
             <Menu className={'menu'} selectedKeys={[]} onClick={onMenuClick}>
@@ -118,7 +121,7 @@ class MyHeader extends React.Component<IMyHeaderProps, {}> {
                             emptyText: '暂无数据',
                             clear: '清空',
                         }}
-                        loading= {false}
+                        loading= {fetchNotice}
                         onTabChange={()=>console.debug('11')}
                         notices={list}
                     >

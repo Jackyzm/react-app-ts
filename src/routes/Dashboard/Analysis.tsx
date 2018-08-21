@@ -442,7 +442,7 @@ export default class DashboardAnalysis extends Component<{chart, loading: boolea
                     </Col>
                 </Row>
 
-                <Card
+                {/* <Card
                     loading={loading}
                     className={'offlineCard'}
                     bordered={false}
@@ -465,7 +465,7 @@ export default class DashboardAnalysis extends Component<{chart, loading: boolea
                             </TabPane>
                         ))}
                     </Tabs>
-                </Card>
+                </Card> */}
             </Fragment>
         );
     }

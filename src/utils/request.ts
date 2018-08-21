@@ -1,7 +1,7 @@
-// import fetch from 'dva/fetch';
 import { notification } from 'antd';
-// import { routerRedux } from 'dva/router';
-// import store from '../index';
+import * as history from 'history';
+
+const myHistory = history.createHashHistory();
 
 const codeMessage = {
     200: '服务器成功返回请求的数据。',
@@ -20,6 +20,7 @@ const codeMessage = {
     503: '服务不可用，服务器暂时过载或维护。',
     504: '网关超时。',
 };
+
 function checkStatus(response) {
     if (response.status >= 200 && response.status < 300) {
         return response;
@@ -77,7 +78,6 @@ export default function request(url: string, options: object) {
             return Promise.resolve(response.json());
         })
         .catch(err => {
-            // const { dispatch } = store;
             const status = err.name;
             if (status === 401) {
                 // dispatch({
@@ -86,15 +86,15 @@ export default function request(url: string, options: object) {
                 return;
             }
             if (status === 403) {
-                // dispatch(routerRedux.push('/exception/403'));
+                myHistory.push('/exception/403');
                 return;
             }
             if (status <= 504 && status >= 500) {
-                // dispatch(routerRedux.push('/exception/500'));
+                myHistory.push('/exception/500');
                 return;
             }
             if (status >= 404 && status < 422) {
-                // dispatch(routerRedux.push('/exception/404'));
+                myHistory.push('/exception/404');
             }
         });
 }
