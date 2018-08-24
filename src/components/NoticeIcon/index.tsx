@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import * as React from 'react';
 import { Popover, Icon, Tabs, Badge, Spin, Tag } from 'antd';
 import moment from 'moment';
 import groupBy from 'lodash/groupBy';
@@ -7,7 +7,7 @@ import './index.less';
 
 const { TabPane } = Tabs;
 
-export interface IMyObj {
+export interface INoticesObj {
     datetime?: string, key?:string, id: string, extra?: any, status?: string, avatar?: string, title: string, type: string, read?: boolean,  description?: string
 }
 export interface INoticeIconProps {
@@ -19,10 +19,10 @@ export interface INoticeIconProps {
     count: number,
     className: string,
     onPopupVisibleChange: ()=>void,
-    notices: IMyObj[]
+    notices: INoticesObj[]
 }
 
-export default class NoticeIcon extends PureComponent<INoticeIconProps, {tabType: string}> {
+class NoticeIcon extends React.Component<INoticeIconProps, {tabType: string}> {
     constructor(props) {
         super(props);
         this.state = {
@@ -147,3 +147,5 @@ export default class NoticeIcon extends PureComponent<INoticeIconProps, {tabType
         );
     }
 }
+
+export default NoticeIcon;

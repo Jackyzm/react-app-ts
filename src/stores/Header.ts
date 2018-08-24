@@ -1,5 +1,5 @@
 import { observable, action } from 'mobx';
-import { getNotice, getUserCurrent } from '../utils/api';
+import { getHeaderNotices, getUserCurrent } from '../utils/api';
 /**
  * @class home
  */
@@ -9,7 +9,7 @@ class Header {
     @observable public userCurrent: {notifyCount?: number} = {};
 
     @action public getHeaderNotice = () => {
-        getNotice().then((res)=>{
+        getHeaderNotices().then((res)=>{
             this.list = res;
             // console.debug(res);
         });

@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import * as React from 'react';
 import { Row, Col, Icon, Card, Tabs, Table, Radio, DatePicker, Tooltip, Menu, Dropdown } from 'antd';
 import { observer, inject } from 'mobx-react';
 import numeral from 'numeral';
@@ -42,7 +42,7 @@ interface IAnalysisColumns {
     }
 })
 @observer
-export default class DashboardAnalysis extends Component<{chart, loading: boolean, getChartsData: ()=>void, clearChartsData: ()=>void}, {rangePickerValue, salesType, currentTabKey}> {
+class DashboardAnalysis extends React.Component<{chart, loading: boolean, getChartsData: ()=>void, clearChartsData: ()=>void}, {rangePickerValue, salesType, currentTabKey}> {
     constructor(props) {
         super(props);
         this.state = {
@@ -108,7 +108,7 @@ export default class DashboardAnalysis extends Component<{chart, loading: boolea
             salesData,
             searchData,
             offlineData,
-            offlineChartData,
+            // offlineChartData,
             salesTypeData,
             salesTypeDataOnline,
             salesTypeDataOffline,
@@ -183,32 +183,32 @@ export default class DashboardAnalysis extends Component<{chart, loading: boolea
             },
         ];
 
-        const activeKey = currentTabKey || (offlineData && offlineData[0] && offlineData[0].name);
+        // const activeKey = currentTabKey || (offlineData && offlineData[0] && offlineData[0].name);
 
-        const CustomTab = ({ data, currentTabKey: currentKey }) => (
-            <Row gutter={8} style={{ width: 138, margin: '8px 0' }}>
-                <Col span={12}>
-                    <NumberInfo
-                        title={data.name}
-                        subTitle="转化率"
-                        gap={2}
-                        total={`${data.cvr * 100}%`}
-                        theme={currentKey !== data.name && 'light'}
-                    />
-                </Col>
-                <Col span={12} style={{ paddingTop: 36 }}>
-                    <Pie
-                        animate={false}
-                        color={currentKey !== data.name && '#BDE4FF'}
-                        inner={0.55}
-                        tooltip={false}
-                        margin={[0, 0, 0, 0]}
-                        percent={`${data.cvr * 100}`}
-                        height={64}
-                    />
-                </Col>
-            </Row>
-        );
+        // const CustomTab = ({ data, currentTabKey: currentKey }) => (
+        //     <Row gutter={8} style={{ width: 138, margin: '8px 0' }}>
+        //         <Col span={12}>
+        //             <NumberInfo
+        //                 title={data.name}
+        //                 subTitle="转化率"
+        //                 gap={2}
+        //                 total={`${data.cvr * 100}%`}
+        //                 theme={currentKey !== data.name && 'light'}
+        //             />
+        //         </Col>
+        //         <Col span={12} style={{ paddingTop: 36 }}>
+        //             <Pie
+        //                 animate={false}
+        //                 color={currentKey !== data.name && '#BDE4FF'}
+        //                 inner={0.55}
+        //                 tooltip={false}
+        //                 margin={[0, 0, 0, 0]}
+        //                 percent={`${data.cvr * 100}`}
+        //                 height={64}
+        //             />
+        //         </Col>
+        //     </Row>
+        // );
 
         const topColResponsiveProps = {
             xs: 24,
@@ -220,7 +220,7 @@ export default class DashboardAnalysis extends Component<{chart, loading: boolea
         };
 
         return (
-            <Fragment>
+            <React.Fragment>
                 <Row gutter={24}>
                     <Col {...topColResponsiveProps}>
                         <ChartCard
@@ -466,7 +466,9 @@ export default class DashboardAnalysis extends Component<{chart, loading: boolea
                         ))}
                     </Tabs>
                 </Card> */}
-            </Fragment>
+            </React.Fragment>
         );
     }
 }
+
+export default DashboardAnalysis;

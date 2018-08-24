@@ -128,7 +128,7 @@ class Radar extends React.Component<IRadarProps, {legendData?, computedHeight?}>
         };
 
         const chartHeight = height - (hasLegend ? 80 : 22);
-
+        console.debug(forceFit);
         return (
             <div className={'radar'} style={{ height }}>
                 {title && <h4>{title}</h4>}
@@ -174,8 +174,8 @@ class Radar extends React.Component<IRadarProps, {legendData?, computedHeight?}>
                 </Chart>
                 {hasLegend && (
                     <Row className={'legend'}>
-                        {legendData.map((item, i) => (
-                            <Col
+                        {legendData.map((item, i) => {
+                            return <Col
                                 span={24 / legendData.length}
                                 key={item.name}
                                 onClick={() => this.handleLegendClick(item, i)}
@@ -193,7 +193,7 @@ class Radar extends React.Component<IRadarProps, {legendData?, computedHeight?}>
                                     <h6>{item.value}</h6>
                                 </div>
                             </Col>
-                        ))}
+                        })}
                     </Row>
                 )}
             </div>

@@ -5,14 +5,14 @@ import autoHeight from '../autoHeight';
 const { Arc, Html, Line } = Guide;
 
 export interface IGaugeProps {
-  title?: React.ReactNode;
-  color?: string;
-  height?: number;
-  bgColor?: number;
-  percent?: number;
-  style?: React.CSSProperties;
-  forceFit?: boolean,
-  formatter?: (val)=>void
+    title?: React.ReactNode;
+    color?: string;
+    height?: number;
+    bgColor?: number;
+    percent?: number;
+    style?: React.CSSProperties;
+    forceFit?: boolean,
+    // formatter?: (val)=>void
 }
 
 const defaultFormatter = val => {
@@ -71,7 +71,6 @@ export default class Gauge extends React.Component<IGaugeProps> {
             height,
             percent,
             forceFit = true,
-            formatter = defaultFormatter,
             color = '#2F9CFF',
             bgColor = '#F0F2F5',
         } = this.props;
@@ -102,15 +101,15 @@ export default class Gauge extends React.Component<IGaugeProps> {
                     name="value"
                     // zIndex={2}
                     // gird={null}
-                    // label={{
-                    //     offset: -12,
-                    //     formatter,
-                    //     textStyle: {
-                    //         fontSize: 12,
-                    //         fill: 'rgba(0, 0, 0, 0.65)',
-                    //         textAlign: 'center',
-                    //     },
-                    // }}
+                    label={{
+                        offset: -12,
+                        formatter: defaultFormatter,
+                        textStyle: {
+                            fontSize: 12,
+                            fill: 'rgba(0, 0, 0, 0.65)',
+                            textAlign: 'center',
+                        },
+                    }}
                 />
                 <Guide>
                     <Line

@@ -10,6 +10,7 @@ export interface ITagCloudProps {
     data?: Array<{
         name: string,
         value: number,
+        type?: number,
     }>,
     height?: number,
     style?: React.CSSProperties,
@@ -27,8 +28,8 @@ class TagCloud extends React.Component<ITagCloudProps, { dv?, w?: number, h?: nu
         super(props);
         this.state = {
             dv: null,
-            w: null,
-            h: null,
+            // w: null,
+            // h: null,
         }
     }
 
@@ -96,10 +97,10 @@ class TagCloud extends React.Component<ITagCloudProps, { dv?, w?: number, h?: nu
         // const colors = ['#1890FF', '#41D9C7', '#2FC25B', '#FACC14', '#9AE65C'];
         const { data, height } = nextProps || this.props;
 
-        if (data.length < 1 || !this.root) {
+        if (!data || data.length < 1 || !this.root) {
             return;
         }
-
+        console.debug(data);
         const h = height * 4;
         const w = this.root.offsetWidth * 4;
 

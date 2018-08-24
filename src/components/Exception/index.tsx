@@ -1,4 +1,4 @@
-import React, { createElement } from 'react';
+import * as React from 'react';
 import { Button } from 'antd';
 import config from './typeConfig';
 import './index.less';
@@ -32,7 +32,7 @@ class Exception extends React.Component<IExceptionProps> {
                     <div className={'desc'}>{desc || config[pageType].desc}</div>
                     <div className={'actions'}>
                         {actions ||
-                            createElement(
+                            React.createElement(
                                 linkElement,
                                 {
                                     to: '/',

@@ -1,15 +1,19 @@
-import React, { PureComponent } from 'react';
+import * as React from 'react';
 import { Button, Spin, Card } from 'antd';
 import './style.less';
 
 // @connect(state => ({
 //     isloading: state.error.isloading,
 // }))
-export default class TriggerException extends PureComponent {
-    state = {
-        isloading: false,
-    };
-    triggerError = code => {
+export default class TriggerException extends React.Component<{}, {isloading:boolean}> {
+    constructor(props) {
+        super(props);
+        this.state = {
+            isloading: false,
+        }
+    }
+
+    private triggerError = code => {
         this.setState({
             isloading: true,
         });
@@ -20,7 +24,7 @@ export default class TriggerException extends PureComponent {
         //     },
         // });
     };
-    render() {
+    public render() {
         return (
             <Card>
                 <Spin spinning={this.state.isloading} wrapperClassName={'trigger'}>

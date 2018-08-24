@@ -4,7 +4,7 @@ import { observer, inject } from 'mobx-react';
 // import { Link } from 'react-router-dom';
 import NoticeIcon from '../NoticeIcon';
 import HeaderSearch from '../HeaderSearch';
-import { IMyObj } from '../NoticeIcon';
+import { INoticesObj } from '../NoticeIcon';
 import './index.less';
 
 export interface IMyHeaderProps {
@@ -15,7 +15,7 @@ export interface IMyHeaderProps {
     onNoticeClear: (type:string)=>void,
     onNoticeVisibleChange: ()=>void,
     getHeaderNotice?: ()=>void,
-    list?: IMyObj[],
+    list?: INoticesObj[],
     fetchNotice?: boolean,
     getUserCurrentData?: ()=>void,
     userCurrent?: {name: string, avatar:string, notifyCount: number},
@@ -116,7 +116,7 @@ class MyHeader extends React.Component<IMyHeaderProps, {}> {
                     </Tooltip>
                     <NoticeIcon
                         className={'action'}
-                        count={userCurrent.notifyCount || 0}
+                        count={userCurrent && userCurrent.notifyCount || 0}
                         onItemClick={(item, tabProps) => {
                             console.log(item, tabProps); // eslint-disable-line
                         }}
@@ -132,7 +132,7 @@ class MyHeader extends React.Component<IMyHeaderProps, {}> {
                         notices={list}
                     />
 
-                    {userCurrent.name ? (
+                    {userCurrent && userCurrent.name ? (
                         <Dropdown overlay={menu}>
                             <span className={'action account'}>
                                 <Avatar size="small" className={'avatar'} src={userCurrent.avatar} />

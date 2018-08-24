@@ -1,37 +1,49 @@
 import * as React from 'react';
 import { Row, Col, Card, Tooltip } from 'antd';
+import { observer, inject } from 'mobx-react';
 import numeral from 'numeral';
 import { Pie, WaterWave, Gauge, TagCloud } from '../../components/Charts';
 import NumberInfo from '../../components/NumberInfo';
 import CountDown from '../../components/CountDown';
 import ActiveChart from '../../components/ActiveChart';
-// import Authorized from '../../utils/Authorized';
 import './Monitor.less';
-
-// const { Secured } = Authorized;
 
 const targetTime = new Date().getTime() + 3900000;
 
-// use permission as a parameter
-const havePermissionAsync = new Promise(resolve => {
-    // Call resolve on behalf of passed
-    setTimeout(() => resolve(), 1000);
-});
-// @Secured(havePermissionAsync)
 // @connect(({ monitor, loading }) => ({
 //   monitor,
 //   loading: loading.models.monitor,
 // }))
-export default class Monitor extends React.Component {
-    componentDidMount() {
-        // this.props.dispatch({
-        //     type: 'monitor/fetchTags',
-        // });
+export interface IMonitorProps {
+    monitorList: Array<{ name: string; value: number, type: number }>,
+    loading: boolean,
+    getTagsData?: ()=>void,
+    clearTagsData?: ()=>void,
+}
+@inject( (store: { Monitor })=>{
+    return {
+        monitorList: store.Monitor.monitor,
+        getTagsData: store.Monitor.getTagsData,
+        clearTagsData: store.Monitor.clearTagsData,
+    }
+})
+@observer
+class Monitor extends React.Component<IMonitorProps> {
+    public componentDidMount() {
+        if (this.props.getTagsData) {
+            this.props.getTagsData();
+        }
     }
 
-    render() {
-        const { monitor, loading } = this.props;
-        const { tags } = monitor;
+    public componentWillUnmount() {
+        if (this.props.clearTagsData) {
+            this.props.clearTagsData();
+        }
+    }
+
+    public render() {
+        const { monitorList, loading } = this.props;
+        console.debug(monitorList);
         return (
             <React.Fragment>
                 <Row gutter={24}>
@@ -129,7 +141,7 @@ export default class Monitor extends React.Component {
                             bordered={false}
                             bodyStyle={{ overflow: 'hidden' }}
                         >
-                            <TagCloud data={tags} height={161} />
+                            {/* <TagCloud data={monitorList || []} height={161} /> */}
                         </Card>
                     </Col>
                     <Col xl={6} lg={12} sm={24} xs={24}>
@@ -146,3 +158,5 @@ export default class Monitor extends React.Component {
         );
     }
 }
+
+export default Monitor;
