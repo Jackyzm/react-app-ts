@@ -1,5 +1,6 @@
-var webpack = require('webpack');
-var path = require('path');
+const webpack = require('webpack');
+const path = require('path');
+const chalk = require('chalk');
 const autoprefixer = require('autoprefixer');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
@@ -7,6 +8,8 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 const WebpackMerge = require('webpack-merge');
+const ProgressBarPlugin = require('progress-bar-webpack-plugin');
+
 const commonConfig = require('./webpack.common');
 
 const entryPath = path.join(__dirname, './src');
@@ -88,6 +91,10 @@ const config = {
         ]
     },
     plugins: [
+        new ProgressBarPlugin({
+            format: '  build [:bar] ' + chalk.green.bold(':percent') + ' (:elapsed seconds)',
+            clear: false
+        }),
         // new webpack.DefinePlugin({
         //     "process.env.NODE_ENV": JSON.stringify("production")
         // }),
@@ -115,32 +122,32 @@ const config = {
         // Minify the code.
         new UglifyJsPlugin({
             uglifyOptions: {
-            parse: {
-                // we want uglify-js to parse ecma 8 code. However we want it to output
-                // ecma 5 compliant code, to avoid issues with older browsers, this is
-                // whey we put `ecma: 5` to the compress and output section
-                // https://github.com/facebook/create-react-app/pull/4234
-                ecma: 8,
-            },
-            compress: {
-                ecma: 5,
-                warnings: false,
-                // Disabled because of an issue with Uglify breaking seemingly valid code:
-                // https://github.com/facebook/create-react-app/issues/2376
-                // Pending further investigation:
-                // https://github.com/mishoo/UglifyJS2/issues/2011
-                comparisons: false,
-            },
-            mangle: {
-                safari10: true,
-            },
-            output: {
-                ecma: 5,
-                comments: false,
-                // Turned on because emoji and regex is not minified properly using default
-                // https://github.com/facebook/create-react-app/issues/2488
-                ascii_only: true,
-            },
+                parse: {
+                    // we want uglify-js to parse ecma 8 code. However we want it to output
+                    // ecma 5 compliant code, to avoid issues with older browsers, this is
+                    // whey we put `ecma: 5` to the compress and output section
+                    // https://github.com/facebook/create-react-app/pull/4234
+                    ecma: 8,
+                },
+                compress: {
+                    ecma: 5,
+                    warnings: false,
+                    // Disabled because of an issue with Uglify breaking seemingly valid code:
+                    // https://github.com/facebook/create-react-app/issues/2376
+                    // Pending further investigation:
+                    // https://github.com/mishoo/UglifyJS2/issues/2011
+                    comparisons: false,
+                },
+                mangle: {
+                    safari10: true,
+                },
+                output: {
+                    ecma: 5,
+                    comments: false,
+                    // Turned on because emoji and regex is not minified properly using default
+                    // https://github.com/facebook/create-react-app/issues/2488
+                    ascii_only: true,
+                },
             },
             // Use multi-process parallel running to improve the build speed
             // Default number of concurrent runs: os.cpus().length - 1

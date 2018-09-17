@@ -1,4 +1,4 @@
-var path = require('path');
+const path = require('path');
 const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 const tsImportPluginFactory = require('ts-import-plugin');
 // const entryPath = path.join(__dirname, './src');

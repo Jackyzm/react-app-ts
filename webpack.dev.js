@@ -1,9 +1,12 @@
-var webpack = require('webpack');
-var path = require('path');
+const webpack = require('webpack');
+const path = require('path');
+const chalk = require('chalk');
 const autoprefixer = require('autoprefixer');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const WebpackMerge = require('webpack-merge');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
+const ProgressBarPlugin = require('progress-bar-webpack-plugin');
+
 const commonConfig = require('./webpack.common');
 
 const entryPath = path.join(__dirname, './src');
@@ -28,6 +31,7 @@ const config = {
         historyApiFallback: true,
         inline: true,
         // progress: true,
+        host: '0.0.0.0',
         port,
         proxy: {
             '/api':{
@@ -85,6 +89,10 @@ const config = {
         ]
     },
     plugins: [
+        new ProgressBarPlugin({
+            format: '  start [:bar] ' + chalk.green.bold(':percent') + ' (:elapsed seconds)',
+            clear: false
+        }),
         // new webpack.DefinePlugin({
         //     "process.env.NODE_ENV": JSON.stringify("development")
         // }),
