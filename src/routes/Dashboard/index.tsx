@@ -20,9 +20,9 @@ class Dashboard extends React.Component {
     public render() {
         return(
             <div className='Dashboard'>
-                    <Switch>
-                        {routeMap.map((item, index) => <Route key={index} exact={true} path={item.path} name={item.name} component={item.component} />)}
-                    </Switch>
+                <Switch>
+                    {routeMap.map((item, index) => <Route key={index} exact={true} path={item.path} name={item.name} component={item.component} />)}
+                </Switch>
             </div>
         );
     }

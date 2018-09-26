@@ -1,17 +1,39 @@
 import * as React from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, withRouter } from 'react-router-dom';
 import { Menu, Icon } from 'antd';
 import menuData from './menu';
 
 const { SubMenu } = Menu;
+export interface IMyMenuProps {
+    location: any
+}
 /**
  * @class MyMenu
  */
-class MyMenu extends React.Component {
+@withRouter
+class MyMenu extends React.Component<IMyMenuProps, {collapsed: boolean, openKeys: string[]}> {
+    private rootSubmenuKeys = [];
     constructor(props) {
         super(props);
         this.state = {
             collapsed: false,
+            openKeys: [],
+        }
+    }
+    public componentWillMount() {
+        menuData.map((item)=>{
+            this.rootSubmenuKeys.push(item.path);
+        });
+        console.debug(this.props);
+    }
+    private onOpenChange(openKeys) {
+        const latestOpenKey = openKeys.find(key => this.state.openKeys.indexOf(key) === -1);
+        if (this.rootSubmenuKeys.indexOf(latestOpenKey) === -1) {
+        this.setState({ openKeys });
+        } else {
+        this.setState({
+            openKeys: latestOpenKey ? [latestOpenKey] : [],
+        });
         }
     }
     public render() {
@@ -20,6 +42,8 @@ class MyMenu extends React.Component {
                 theme="dark"
                 mode="inline"
                 defaultSelectedKeys={['1']}
+                openKeys={this.state.openKeys}
+                onOpenChange={(key)=>this.onOpenChange(key)}
             >
             {
                 menuData.map((item: { children: [{name: string, path: string, hideInMenu?: boolean}], icon: string, name: string, path: string }, index: number)=>{
@@ -32,7 +56,7 @@ class MyMenu extends React.Component {
                         );
                     } else {
                         return (
-                            <SubMenu key={index} title={<span><Icon type={item.icon} /><span>{item.name}</span></span>}>
+                            <SubMenu key={item.path} title={<span><Icon type={item.icon} /><span>{item.name}</span></span>}>
                                 {
                                     item.children.map((value: { path: string, name: string }, num: number)=>{
                                         return (
