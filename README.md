@@ -11,5 +11,6 @@ $ npm install
 $ node .\server\server.js
 启动项目
 $ npm run start
+在浏览器中输入 http://localhost:8000
 ```
 
