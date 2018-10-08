@@ -4,14 +4,12 @@ import { Menu, Icon } from 'antd';
 import menuData from './menu';
 
 const { SubMenu } = Menu;
-export interface IMyMenuProps {
-    location: any
-}
+
 /**
  * @class MyMenu
  */
 @withRouter
-class MyMenu extends React.Component<IMyMenuProps, {collapsed: boolean, openKeys: string[]}> {
+class MyMenu extends React.Component<{}, {collapsed: boolean, openKeys: string[]}> {
     private rootSubmenuKeys = [];
     constructor(props) {
         super(props);

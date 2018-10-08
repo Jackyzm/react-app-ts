@@ -49,6 +49,7 @@ class App extends React.Component<{changeFetchNotice:()=>void, clearNotices: (ty
                     trigger={null}
                     collapsible={true}
                     collapsed={this.state.collapsed}
+                    style={{zIndex: 10}}
                 >
                     <div className={"logo"} key="logo">
                         <Link to="/">
