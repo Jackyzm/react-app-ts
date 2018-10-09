@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import { Form, Input, Button, Alert, Divider } from 'antd';
 import { digitUppercase } from '../../../utils/utils';
 import './style.less';

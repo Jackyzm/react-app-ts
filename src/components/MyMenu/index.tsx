@@ -9,7 +9,7 @@ const { SubMenu } = Menu;
  * @class MyMenu
  */
 @withRouter
-class MyMenu extends React.Component<{}, {collapsed: boolean, openKeys: string[]}> {
+class MyMenu extends React.Component<{}, { collapsed: boolean, openKeys: string[] }> {
     private rootSubmenuKeys = [];
     constructor(props) {
         super(props);
@@ -19,19 +19,18 @@ class MyMenu extends React.Component<{}, {collapsed: boolean, openKeys: string[]
         }
     }
     public componentWillMount() {
-        menuData.map((item)=>{
+        menuData.map((item) => {
             this.rootSubmenuKeys.push(item.path);
         });
-        console.debug(this.props);
     }
     private onOpenChange(openKeys) {
         const latestOpenKey = openKeys.find(key => this.state.openKeys.indexOf(key) === -1);
         if (this.rootSubmenuKeys.indexOf(latestOpenKey) === -1) {
-        this.setState({ openKeys });
+            this.setState({ openKeys });
         } else {
-        this.setState({
-            openKeys: latestOpenKey ? [latestOpenKey] : [],
-        });
+            this.setState({
+                openKeys: latestOpenKey ? [latestOpenKey] : [],
+            });
         }
     }
     public render() {
@@ -41,36 +40,52 @@ class MyMenu extends React.Component<{}, {collapsed: boolean, openKeys: string[]
                 mode="inline"
                 defaultSelectedKeys={['1']}
                 openKeys={this.state.openKeys}
-                onOpenChange={(key)=>this.onOpenChange(key)}
+                onOpenChange={(key) => this.onOpenChange(key)}
             >
-            {
-                menuData.map((item: { children: [{name: string, path: string, hideInMenu?: boolean}], icon: string, name: string, path: string }, index: number)=>{
-                    if (!item.children) {
-                        return (
-                            <Menu.Item key={index}>
-                                <Icon type={item.icon} />
-                                <span>{item.name}</span>
-                            </Menu.Item>
-                        );
-                    } else {
-                        return (
-                            <SubMenu key={item.path} title={<span><Icon type={item.icon} /><span>{item.name}</span></span>}>
-                                {
-                                    item.children.map((value: { path: string, name: string }, num: number)=>{
-                                        return (
-                                            <Menu.Item key={`${index}${num}`}>
-                                                <NavLink to={`/${item.path}/${value.path}`}>
-                                                    <span>{value.name}</span>
-                                                </NavLink>
-                                            </Menu.Item>
-                                        );
-                                    })
-                                }
-                            </SubMenu>
-                        );
-                    }
-                })
-            }
+                {
+                    menuData.map((item: { children: [{ name: string, path: string, hideInMenu?: boolean }], icon: string, name: string, path: string }, index: number) => {
+                        if (!item.children) {
+                            return (
+                                <Menu.Item key={index}>
+                                    <Icon type={item.icon} />
+                                    <span>{item.name}</span>
+                                </Menu.Item>
+                            );
+                        } else {
+                            return (
+                                <SubMenu key={item.path} title={<span><Icon type={item.icon} /><span>{item.name}</span></span>}>
+                                    {
+                                        item.children.map((value: { children?, path: string, name: string }, num: number, ) => {
+                                            if (value.children) {
+                                                return (
+                                                    <SubMenu key={value.path} title={<span>{value.name}</span>}>
+                                                        {value.children.map((val, numb) => {
+                                                            return (
+                                                                <Menu.Item key={`${index}${num}${numb}`}>
+                                                                    <NavLink to={`/${item.path}/${value.path}/${val.path}`}>
+                                                                        <span>{val.name}</span>
+                                                                    </NavLink>
+                                                                </Menu.Item>
+                                                            )
+                                                        })}
+                                                    </SubMenu>
+                                                )
+                                            } else {
+                                                return (
+                                                    <Menu.Item key={`${index}${num}`}>
+                                                        <NavLink to={`/${item.path}/${value.path}`}>
+                                                            <span>{value.name}</span>
+                                                        </NavLink>
+                                                    </Menu.Item>
+                                                );
+                                            }
+                                        })
+                                    }
+                                </SubMenu>
+                            );
+                        }
+                    })
+                }
             </Menu>
         );
     }

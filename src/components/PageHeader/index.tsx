@@ -62,7 +62,6 @@ export default class PageHeader extends React.Component<IPageHeaderProps, {bread
 
 
     public componentDidMount() {
-        console.debug(this.props);
         this.getBreadcrumbDom();
     }
 

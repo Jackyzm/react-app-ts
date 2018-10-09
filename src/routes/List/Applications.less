@@ -1,0 +1,59 @@
+@import '../../utils/utils.less';
+
+.List{
+    .trigger{
+        font-size: 14px !important;
+        line-height: 32px !important;
+        padding: 0 !important;
+    }
+    .ant-list{
+        margin-top: 24px;
+    }
+}
+.filterCardList {
+    margin-bottom: -24px;
+    .ant-card-meta-content {
+        margin-top: 0;
+    }
+    // disabled white space
+    .ant-card-meta-avatar {
+        font-size: 0;
+    }
+    .ant-card-actions {
+        background: #f7f9fa;
+    }
+    .ant-list .ant-list-item-content-single {
+        max-width: 100%;
+    }
+    .cardInfo {
+        .clearfix();
+        margin-top: 16px;
+        margin-left: 40px;
+        & > div {
+            position: relative;
+            text-align: left;
+            float: left;
+            width: 50%;
+            p {
+                line-height: 32px;
+                font-size: 24px;
+                margin: 0;
+            }
+            p:first-child {
+                color: rgba(0, 0, 0, 0.45);
+                font-size: 12px;
+                line-height: 20px;
+                margin-bottom: 4px;
+            }
+        }
+    }
+}
+
+.wan {
+    position: relative;
+    top: -2px;
+    font-size: 14px;
+    font-style: normal;
+    line-height: 20px;
+    margin-left: 2px;
+}

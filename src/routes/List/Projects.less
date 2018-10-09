@@ -1,0 +1,50 @@
+@import '../../utils/utils.less';
+
+.coverCardList {
+  margin-bottom: -24px;
+
+    .card {
+        .ant-card-meta-title {
+            margin-bottom: 4px;
+            & > a {
+            color: rgba(0, 0, 0, 0.85);
+            display: inline-block;
+            max-width: 100%;
+            }
+        }
+        .ant-card-meta-description {
+            height: 44px;
+            line-height: 22px;
+            overflow: hidden;
+        }
+
+        &:hover {
+            .ant-card-meta-title > a {
+                color: #1890ff;
+            }
+        }
+    }
+
+    .cardItemContent {
+        display: flex;
+        margin-top: 16px;
+        margin-bottom: -4px;
+        line-height: 20px;
+        height: 20px;
+        & > span {
+            color: rgba(0, 0, 0, 0.45);
+            flex: 1;
+            font-size: 12px;
+        }
+        .avatarList {
+            flex: 0 1 auto;
+        }
+    }
+    .cardList {
+        margin-top: 24px;
+    }
+
+    .ant-list .ant-list-item-content-single {
+        max-width: 100%;
+    }
+}

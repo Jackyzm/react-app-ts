@@ -15,7 +15,7 @@ const entryPath = path.join(__dirname, './src');
 
 const customizeTheme = require('./src/theme');
 
-const port = 8000;
+const port = 8888;
 
 const config = {
     mode: 'development',

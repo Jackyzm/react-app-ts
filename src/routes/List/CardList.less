@@ -1,0 +1,111 @@
+@import '../../utils/utils.less';
+
+.cardList {
+  margin-bottom: -24px;
+
+  .card {
+      .ant-card-meta-title {
+        margin-bottom: 12px;
+        & > a {
+          color: rgba(0, 0, 0, 0.85);
+          display: inline-block;
+          max-width: 100%;
+        }
+      }
+      .ant-card-actions {
+        background: #f7f9fa;
+      }
+      .ant-card-body:hover {
+        .ant-card-meta-title > a {
+          color: #1890ff;
+        }
+      }
+  }
+  .item {
+    height: 64px;
+  }
+
+    .ant-list .ant-list-item-content-single {
+      max-width: 100%;
+    }
+}
+
+.extraImg {
+    margin-top: -60px;
+    text-align: center;
+    width: 195px;
+    img {
+        width: 100%;
+    }
+}
+
+.newButton {
+    background-color: #fff;
+    border-color: #d9d9d9;
+    border-radius: 2px;
+    color: rgba(0, 0, 0, 0.45);
+    width: 100%;
+    height: 188px;
+}
+
+.cardAvatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 48px;
+}
+
+.cardDescription {
+    .textOverflowMulti();
+}
+
+.List{
+    .pageHeaderContent {
+        position: relative;
+        display: block;
+    }
+}
+
+.contentLink {
+    margin-top: 16px;
+    a {
+        margin-right: 32px;
+        img {
+            width: 24px;
+        }
+    }
+    img {
+        vertical-align: middle;
+        margin-right: 8px;
+    }
+}
+
+@media screen and (max-width: 992px) {
+    .contentLink {
+        a {
+            margin-right: 16px;
+        }
+    }
+}
+@media screen and (max-width: 768px) {
+    .extraImg {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 576px) {
+    .pageHeaderContent {
+        padding-bottom: 30px;
+    }
+    .contentLink {
+        position: absolute;
+        left: 0;
+        bottom: -4px;
+        width: 1000px;
+        a {
+            margin-right: 16px;
+        }
+        img {
+            margin-right: 4px;
+        }
+    }
+}

@@ -1,0 +1,73 @@
+@import '../../utils/utils.less';
+
+.List{
+    .pageHeader .tabs{
+        margin: 0;
+        margin-bottom: -5px;
+        .ant-tabs-nav.ant-tabs-nav-animated{
+            float: left;
+        }
+    }
+}
+.listContent {
+    .description {
+        line-height: 22px;
+        max-width: 720px;
+    }
+    .extra {
+        color: rgba(0, 0, 0, 0.45);
+        margin-top: 16px;
+        line-height: 22px;
+        & > .ant-avatar {
+            vertical-align: top;
+            margin-right: 8px;
+            width: 20px;
+            height: 20px;
+            position: relative;
+            top: 1px;
+        }
+        & > em {
+            color: rgba(0, 0, 0, 0.25);
+            font-style: normal;
+            margin-left: 16px;
+        }
+    }
+}
+a.listItemMetaTitle {
+    color: rgba(0, 0, 0, 0.85);
+}
+.listItemExtra {
+    width: 272px;
+    height: 1px;
+}
+.selfTrigger {
+    margin-left: 12px;
+}
+
+@media screen and (max-width: 480px) {
+    .selfTrigger {
+        display: block;
+        margin-left: 0;
+    }
+    .listContent {
+        .extra {
+            & > em {
+                display: block;
+                margin-left: 0;
+                margin-top: 8px;
+            }
+        }
+    }
+}
+@media screen and (max-width: 768px) {
+    .selfTrigger {
+        display: block;
+        margin-left: 0;
+    }
+}
+@media screen and (max-width: 992px) {
+    .listItemExtra {
+        width: 0;
+        height: 1px;
+    }
+}

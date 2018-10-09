@@ -15,7 +15,6 @@ class StepForm extends React.Component<{location: {pathname: string}}> {
         const { location } = this.props;
         const { pathname } = location;
         const pathList = pathname.split('/');
-        console.debug(pathList[pathList.length - 1]);
         switch (pathList[pathList.length - 1]) {
             case 'info':
                 return 0;
@@ -28,7 +27,6 @@ class StepForm extends React.Component<{location: {pathname: string}}> {
         }
     }
     public render() {
-        console.debug(this.props);
         const { location } = this.props;
         return (
             <PageHeaderLayout

@@ -10,7 +10,7 @@ class Monitor {
     @action public getTagsData = () => {
         getTags().then((res)=>{
             if (res) {
-                console.debug(res.list);
+                // console.debug(res.list);
                 this.monitor = res.list;
             }
         })

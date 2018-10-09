@@ -1,0 +1,167 @@
+@import '../../utils/utils.less';
+
+.standardList {
+    .ant-card-head {
+        border-bottom: none;
+    }
+    .ant-card-head-title {
+        line-height: 32px;
+        padding: 24px 0;
+    }
+    .ant-card-extra {
+        padding: 24px 0;
+    }
+    .ant-list-pagination {
+        text-align: right;
+        margin-top: 24px;
+    }
+    .ant-avatar-lg {
+        width: 48px;
+        height: 48px;
+        line-height: 48px;
+    }
+    .headerInfo {
+        position: relative;
+        text-align: center;
+        & > span {
+            color: rgba(0,0,0,0.45);
+            display: inline-block;
+            font-size: 14px;
+            line-height: 22px;
+            margin-bottom: 4px;
+        }
+        & > p {
+            color: rgba(0,0,0,0.85);
+            font-size: 24px;
+            line-height: 32px;
+            margin: 0;
+        }
+        & > em {
+            background-color: #e8e8e8;
+            position: absolute;
+            height: 56px;
+            width: 1px;
+            top: 0;
+            right: 0;
+        }
+    }
+    .listContent {
+        font-size: 0;
+        .listContentItem {
+            color: rgba(0,0,0,0.45);
+            display: inline-block;
+            vertical-align: middle;
+            font-size: 14px;
+            margin-left: 40px;
+            > span {
+                line-height: 20px;
+            }
+            > p {
+                margin-top: 4px;
+                margin-bottom: 0;
+                line-height: 22px;
+            }
+        }
+    }
+    .extraContentSearch {
+        margin-left: 16px;
+        width: 272px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .standardList {
+        .ant-list-item-content {
+            display: block;
+            flex: none;
+            width: 100%;
+        }
+        .ant-list-item-action {
+            margin-left: 0;
+        }
+        .listContent {
+            margin-left: 0;
+            & > div {
+                margin-left: 0;
+            }
+        }
+        .listCard {
+            .ant-card-head-title {
+                overflow: visible;
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 576px) {
+    .standardList {
+        .extraContentSearch {
+            margin-left: 0;
+            width: 100%;
+        }
+        .headerInfo {
+            margin-bottom: 16px;
+            & > em {
+                display: none;
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .standardList {
+        .listContent {
+            & > div {
+                display: block;
+            }
+            & > div:last-child {
+                top: 0;
+                width: 100%;
+            }
+        }
+    }
+    .listCard {
+        .ant-radio-group {
+            display: block;
+            margin-bottom: 8px;
+        }
+    }
+}
+
+@media screen and (max-width: 992px) and (min-width: 768px) {
+    .standardList {
+        .listContent {
+            & > div {
+                display: block;
+            }
+            & > div:last-child {
+                top: 0;
+                width: 100%;
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 1200px) {
+    .standardList {
+        .listContent {
+            & > div {
+                margin-left: 24px;
+            }
+            & > div:last-child {
+                top: 0;
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 1400px) {
+    .standardList {
+        .listContent {
+            text-align: right;
+            & > div:last-child {
+                top: 0;
+            }
+        }
+    }
+}

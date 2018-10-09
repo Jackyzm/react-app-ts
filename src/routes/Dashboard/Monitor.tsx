@@ -43,7 +43,6 @@ class Monitor extends React.Component<IMonitorProps> {
 
     public render() {
         const { monitorList, loading } = this.props;
-        console.debug(monitorList);
         return (
             <React.Fragment>
                 <Row gutter={24}>

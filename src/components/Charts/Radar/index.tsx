@@ -128,7 +128,6 @@ class Radar extends React.Component<IRadarProps, {legendData?, computedHeight?}>
         };
 
         const chartHeight = height - (hasLegend ? 80 : 22);
-        console.debug(forceFit);
         return (
             <div className={'radar'} style={{ height }}>
                 {title && <h4>{title}</h4>}

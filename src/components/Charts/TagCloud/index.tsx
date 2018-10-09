@@ -100,7 +100,6 @@ class TagCloud extends React.Component<ITagCloudProps, { dv?, w?: number, h?: nu
         if (!data || data.length < 1 || !this.root) {
             return;
         }
-        console.debug(data);
         const h = height * 4;
         const w = this.root.offsetWidth * 4;
 
