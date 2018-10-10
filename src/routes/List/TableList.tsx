@@ -1,5 +1,6 @@
 import * as React from 'react';
 import moment from 'moment';
+import { observer, inject } from 'mobx-react';
 import { Row, Col, Card, Form, Input, Select, Icon, Button, Dropdown, Menu, InputNumber, DatePicker, Modal, message, Badge, Divider } from 'antd';
 import StandardTable from '../../components/StandardTable';
 import PageHeaderLayout from '../../components/PageHeaderLayout';
@@ -41,13 +42,27 @@ const CreateForm = Form.create()((props:{modalVisible:boolean, form, handleAdd: 
         </Modal>
     );
 });
-
-// @connect(({ rule, loading }) => ({
-//   rule,
-//   loading: loading.models.rule,
-// }))
-
-class TableList extends React.Component<{form, rule, loading: boolean}, {modalVisible: boolean, expandForm: boolean, selectedRows, formValues}> {
+export interface ITableListProps {
+    form,
+    rule,
+    loading: boolean,
+    getList:(params?)=>void,
+    clearList: ()=>void,
+    addList: (params)=>void,
+    deleteList: (params, callback)=>void,
+}
+@inject( (store: {TableList}) => {
+    return {
+        rule: store.TableList.list,
+        getList: store.TableList.getList,
+        clearList: store.TableList.clearList,
+        loading: store.TableList.loading,
+        addList: store.TableList.addList,
+        deleteList: store.TableList.deleteList,
+    }
+})
+@observer
+class TableList extends React.Component<ITableListProps, {modalVisible: boolean, expandForm: boolean, selectedRows, formValues}> {
     constructor(props){
         super(props);
         this.state = {
@@ -59,14 +74,14 @@ class TableList extends React.Component<{form, rule, loading: boolean}, {modalVi
     }
 
     public componentDidMount() {
-        // const { dispatch } = this.props;
-        // dispatch({
-        //     type: 'rule/fetch',
-        // });
+        this.props.getList();
+    }
+
+    public componentWillUnmount() {
+        this.props.clearList();
     }
 
     private handleStandardTableChange = (pagination, filtersArg, sorter) => {
-        // const { dispatch } = this.props;
         const { formValues } = this.state;
 
         const filters = Object.keys(filtersArg).reduce((obj, key) => {
@@ -85,10 +100,7 @@ class TableList extends React.Component<{form, rule, loading: boolean}, {modalVi
             params.sorter = `${sorter.field}_${sorter.order}`;
         }
 
-        // dispatch({
-        //     type: 'rule/fetch',
-        //     payload: params,
-        // });
+        this.props.getList(params);
     };
 
     private handleFormReset = () => {
@@ -97,10 +109,8 @@ class TableList extends React.Component<{form, rule, loading: boolean}, {modalVi
         this.setState({
             formValues: {},
         });
-        // dispatch({
-        //     type: 'rule/fetch',
-        //     payload: {},
-        // });
+
+        this.props.getList();
     };
 
     private toggleForm = () => {
@@ -111,22 +121,26 @@ class TableList extends React.Component<{form, rule, loading: boolean}, {modalVi
 
     private handleMenuClick = e => {
         const { selectedRows } = this.state;
-
         if (!selectedRows) {
             return;
         }
 
         switch (e.key) {
             case 'remove':
+                this.props.deleteList({no: selectedRows.map(row => row.no).join(',')}, () => {
+                    this.setState({
+                        selectedRows: [],
+                    });
+                })
                 // dispatch({
                 //     type: 'rule/remove',
                 //     payload: {
                 //         no: selectedRows.map(row => row.no).join(','),
                 //     },
                 //     callback: () => {
-                        this.setState({
-                            selectedRows: [],
-                        });
+                //         this.setState({
+                //             selectedRows: [],
+                //         });
                 //     },
                 // });
                 break;
@@ -160,10 +174,7 @@ class TableList extends React.Component<{form, rule, loading: boolean}, {modalVi
                 formValues: values,
             });
 
-            // dispatch({
-            //     type: 'rule/fetch',
-            //     payload: values,
-            // });
+            this.props.getList(values);
         });
     };
 
@@ -174,12 +185,7 @@ class TableList extends React.Component<{form, rule, loading: boolean}, {modalVi
     };
 
     private handleAdd = fields => {
-        // this.props.dispatch({
-        //     type: 'rule/add',
-        //     payload: {
-        //         description: fields.desc,
-        //     },
-        // });
+        this.props.addList({description: fields.desc});
 
         message.success('添加成功');
         this.setState({
@@ -303,9 +309,10 @@ class TableList extends React.Component<{form, rule, loading: boolean}, {modalVi
 
     public render() {
         const { rule, loading } = this.props;
+        console.debug(rule);
         let data = {};
-        if (rule) {
-            data = rule.data;
+        if (rule && rule.list) {
+            data = rule;
         } else {
             data = {
                 list: [],

@@ -1,4 +1,4 @@
-// import { stringify } from 'qs';
+import qs from 'qs';
 import request from './request';
 
 export async function getHeaderNotices() {
@@ -23,4 +23,29 @@ export async function getNotice() {
 
 export async function getActivities() {
     return await request('/api/activities', {});
+}
+
+export async function basicFormSubmit(params) {
+    return await request('/api/form-basic', {
+        method: 'POST',
+        body: params,
+    });
+}
+
+export async function getTableList(params) {
+    return await request(`/api/table-list?${qs.stringify(params)}`, {});
+}
+
+export async function addTableList(params) {
+    return await request('/api/table-list-put', {
+        method: 'PUT',
+        body: params,
+    });
+}
+
+export async function deleteTableList(params) {
+    return await request('/api/table-list-delete', {
+        method: 'POST',
+        body: params,
+    });
 }

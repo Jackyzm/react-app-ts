@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { Route, Switch } from 'react-router-dom';
+import './style.less';
 
 import FourZeroThree from './403';
 import FourZeroFour from './404';

@@ -1,8 +1,8 @@
 import Home from './Home';
 import Header from './Header';
-import Analysis from './Dashboard/Analysis';
-import Monitor from './Dashboard/Monitor';
-import Workplace from './Dashboard/Workplace';
+import { Analysis, Monitor, Workplace } from './Dashboard';
+import { BasicForm } from './Form';
+import { TableList } from './List';
 
 export default {
     Home,
@@ -10,4 +10,6 @@ export default {
     Analysis,
     Monitor,
     Workplace,
+    BasicForm,
+    TableList
 };

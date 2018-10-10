@@ -104,24 +104,14 @@ function fakeList(count) {
     return list;
 }
 
-function getFakeList(req, res, u) {
-    let url = u;
-    if (!url || Object.prototype.toString.call(url) !== '[object String]') {
-        url = req.url; // eslint-disable-line
-    }
-
-    // const params = parse(url, true).query;
-    const params = {count:1}
+function getFakeList(query) {
+    const params = query;
 
     const count = params.count * 1 || 20;
 
     const result = fakeList(count);
 
-    if (res && res.json) {
-        res.json(result);
-    } else {
-        return result;
-    }
+    return result;
 }
 
 const getNotice = [

@@ -4,8 +4,8 @@ import './index.less';
 
 /* eslint react/no-did-mount-set-state: 0 */
 /* eslint no-param-reassign: 0 */
-const element = document.body as HTMLElement;
-console.debug(element.style);
+// const element = document.body as HTMLElement;
+// console.debug(element.style);
 // const isSupportLineClamp = element.style.webkitLineClamp !== undefined;
 const isSupportLineClamp = true;
 const EllipsisText = ({ text, length, tooltip, ...other }) => {

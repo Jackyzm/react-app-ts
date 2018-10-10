@@ -1,11 +1,14 @@
 import * as React from 'react';
+import { observer, inject } from 'mobx-react';
 import { Form, Input, DatePicker, Select, Button, Card, InputNumber, Radio, Icon, Tooltip } from 'antd';
 import PageHeaderLayout from '../../components/PageHeaderLayout';
 import './style.less';
 
 export interface IBasicFormsProps {
     form: any,
-    submitting: boolean
+    submitting: boolean,
+    clearSubmitBasicForm: ()=>void,
+    submitBasicFormData: (values)=>void,
 }
 
 const FormItem = Form.Item;
@@ -16,7 +19,14 @@ const { TextArea } = Input;
 // @connect(({ loading }) => ({
 //     submitting: loading.effects['form/submitRegularForm'],
 // }))
-
+@inject( (store: {BasicForm}) => {
+    return {
+        resData: store.BasicForm.res || {},
+        submitBasicFormData: store.BasicForm.submitBasicFormData,
+        clearSubmitBasicForm: store.BasicForm.clearSubmitBasicForm,
+    }
+})
+@observer
 class BasicForms extends React.Component<IBasicFormsProps> {
     public handleSubmit = e => {
         e.preventDefault();
@@ -26,9 +36,14 @@ class BasicForms extends React.Component<IBasicFormsProps> {
                 //     type: 'form/submitRegularForm',
                 //     payload: values,
                 // });
+                this.props.submitBasicFormData(values);
             }
         });
     };
+    public componentWillUnmount() {
+        this.props.clearSubmitBasicForm();
+    }
+
     public render() {
         const { submitting } = this.props;
         const { getFieldDecorator, getFieldValue } = this.props.form;
