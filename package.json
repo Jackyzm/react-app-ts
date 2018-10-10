@@ -5,7 +5,8 @@
     "main": "index.tsx",
     "scripts": {
         "build": "rimraf dist && webpack --config webpack.prod.js --profile",
-        "start": "webpack-dev-server --config webpack.dev.js --colors"
+        "start": "webpack-dev-server --config webpack.dev.js --colors",
+        "serve": "nodemon ./server/server.js"
     },
     "author": "Jackyzm",
     "license": "MIT",
