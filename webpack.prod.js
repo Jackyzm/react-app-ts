@@ -3,7 +3,9 @@ const path = require('path');
 const chalk = require('chalk');
 const autoprefixer = require('autoprefixer');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const safePostCssParser = require('postcss-safe-parser');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
@@ -30,65 +32,83 @@ const config = {
         'whatwg-fetch',
         path.join(entryPath, './index.tsx')
     ],
-    module:{
+    module: {
         rules: [
             {
                 oneOf: [
                     {
                         test: /\.(css|less)$/,
-                        loader: ExtractTextPlugin.extract(
-                            {
-                                fallback: {
-                                    loader: require.resolve('style-loader'),
+                        loader:
+                            [
+                                {
+                                    loader: MiniCssExtractPlugin.loader,
+                                },
+                                // {
+                                //     loader: require.resolve('style-loader'),
+                                //     options: {
+                                //         hmr: false,
+                                //     },
+                                // },
+                                {
+                                    loader: require.resolve('css-loader'),
                                     options: {
-                                        hmr: false,
+                                        importLoaders: 1,
+                                        minimize: true,
+                                        sourceMap: true,
+                                        alias: { '../img': path.join(__dirname, 'public/img') }
                                     },
                                 },
-                                use: [
-                                    {
-                                        loader: require.resolve('css-loader'),
-                                        options: {
-                                            importLoaders: 1,
-                                            minimize: true,
-                                            sourceMap: true,
-                                            alias: { '../img': path.join(__dirname, 'public/img') }
-                                        },
+                                {
+                                    loader: require.resolve('postcss-loader'),
+                                    options: {
+                                        // Necessary for external CSS imports to work
+                                        // https://github.com/facebookincubator/create-react-app/issues/2677
+                                        ident: 'postcss',
+                                        plugins: () => [
+                                            require('postcss-flexbugs-fixes'),
+                                            autoprefixer({
+                                                browsers: [
+                                                    '>1%',
+                                                    'last 4 versions',
+                                                    'Firefox ESR',
+                                                    'not ie < 9', // React doesn't support IE8 anyway
+                                                ],
+                                                flexbox: 'no-2009',
+                                            }),
+                                        ],
                                     },
-                                    {
-                                        loader: require.resolve('postcss-loader'),
-                                        options: {
-                                            // Necessary for external CSS imports to work
-                                            // https://github.com/facebookincubator/create-react-app/issues/2677
-                                            ident: 'postcss',
-                                            plugins: () => [
-                                                require('postcss-flexbugs-fixes'),
-                                                autoprefixer({
-                                                    browsers: [
-                                                        '>1%',
-                                                        'last 4 versions',
-                                                        'Firefox ESR',
-                                                        'not ie < 9', // React doesn't support IE8 anyway
-                                                    ],
-                                                    flexbox: 'no-2009',
-                                                }),
-                                            ],
-                                        },
+                                },
+                                {
+                                    loader: require.resolve('less-loader'),
+                                    options: {
+                                        sourceMap: true,
+                                        javascriptEnabled: true,
+                                        modifyVars: customizeTheme
                                     },
-                                    {
-                                        loader: require.resolve('less-loader'),
-                                        options: {
-                                            sourceMap: true,
-                                            javascriptEnabled: true,
-                                            modifyVars: customizeTheme
-                                        },
-                                    },
-                                ],
-                            }
-                        ),
+                                },
+                            ]
+
                     },
                 ]
             }
         ]
+    },
+    optimization: {
+        minimizer: [
+            new OptimizeCSSAssetsPlugin({
+                cssProcessorOptions: {
+                    parser: safePostCssParser,
+                    map: {
+                        // `inline: false` forces the sourcemap to be output into a
+                        // separate file
+                        inline: false,
+                        // `annotation: true` appends the sourceMappingURL to the end of
+                        // the css file, helping the browser find the sourcemap
+                        annotation: true,
+                    }
+                },
+            }),
+        ],
     },
     plugins: [
         new ProgressBarPlugin({
@@ -123,19 +143,11 @@ const config = {
         new UglifyJsPlugin({
             uglifyOptions: {
                 parse: {
-                    // we want uglify-js to parse ecma 8 code. However we want it to output
-                    // ecma 5 compliant code, to avoid issues with older browsers, this is
-                    // whey we put `ecma: 5` to the compress and output section
-                    // https://github.com/facebook/create-react-app/pull/4234
                     ecma: 8,
                 },
                 compress: {
                     ecma: 5,
                     warnings: false,
-                    // Disabled because of an issue with Uglify breaking seemingly valid code:
-                    // https://github.com/facebook/create-react-app/issues/2376
-                    // Pending further investigation:
-                    // https://github.com/mishoo/UglifyJS2/issues/2011
                     comparisons: false,
                 },
                 mangle: {
@@ -144,22 +156,21 @@ const config = {
                 output: {
                     ecma: 5,
                     comments: false,
-                    // Turned on because emoji and regex is not minified properly using default
-                    // https://github.com/facebook/create-react-app/issues/2488
                     ascii_only: true,
                 },
             },
-            // Use multi-process parallel running to improve the build speed
-            // Default number of concurrent runs: os.cpus().length - 1
             parallel: true,
-            // Enable file caching
             cache: true,
             sourceMap: true,
-        }),    // Note: this won't work without ExtractTextPlugin.extract(..) in `loaders`.
+        }),
 
         new webpack.NoEmitOnErrorsPlugin(),
 
-        new ExtractTextPlugin("[name].[hash].css"),
+        // new ExtractTextPlugin("[name].[hash].css"),
+        new MiniCssExtractPlugin({
+            filename: '[name].[hash].css',
+            chunkFilename: '[name].[hash].css',
+        }),
 
         new CopyWebpackPlugin(
             [
