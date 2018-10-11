@@ -1,0 +1,62 @@
+.LoginContent{
+    &.container {
+        display: flex;
+        flex-direction: column;
+        height: 100vh;
+        overflow: auto;
+        background: #f0f2f5;
+    }
+
+    .content {
+        padding: 32px 0;
+        flex: 1;
+    }
+    .top {
+        text-align: center;
+    }
+
+    .header {
+        height: 44px;
+        line-height: 44px;
+        a {
+            text-decoration: none;
+        }
+    }
+
+    .logo {
+        height: 44px;
+        vertical-align: top;
+        margin-right: 16px;
+    }
+
+    .title {
+        font-size: 33px;
+        color: rgba(0, 0, 0, 0.85);
+        font-family: 'Myriad Pro', 'Helvetica Neue', Arial, Helvetica, sans-serif;
+        font-weight: 600;
+        position: relative;
+        top: 2px;
+    }
+
+    .desc {
+        font-size: 14px;
+        color: rgba(0, 0, 0, 0.45);
+        margin-top: 12px;
+        margin-bottom: 40px;
+    }
+}
+
+@media (min-width: 768px) {
+    .LoginContent.container {
+        background-image: url('https://gw.alipayobjects.com/zos/rmsportal/TVYTbAXWheQpRcWDaDMu.svg');
+        background-repeat: no-repeat;
+        background-position: center 110px;
+        background-size: 100%;
+    }
+
+    .LoginContent .content {
+        padding: 112px 0 24px 0;
+    }
+}
+
+

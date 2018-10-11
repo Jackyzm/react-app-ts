@@ -12,7 +12,9 @@ export interface IPageHeaderLayoutProps {
     title?:string,
     tabActiveKey?: string,
     tabList?,
-    onTabChange?
+    onTabChange?,
+    logo?,
+    action?
 }
 class PageHeaderLayout extends React.Component<IPageHeaderLayoutProps> {
     public render() {

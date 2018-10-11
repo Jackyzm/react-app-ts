@@ -7,6 +7,7 @@ import zhCN from 'antd/lib/locale-provider/zh_CN';
 
 import stores from './stores/index';
 import App from './App';
+import User from './routes/User';
 import Test from './Test';
 
 // console.debug(stores);
@@ -16,8 +17,9 @@ ReactDOM.render(
         <Router>
             <LocaleProvider locale={zhCN}>
                 <Switch>
-                    <Route path='/' component={App}/>
                     <Route exact={true} path='/test' component={Test}/>
+                    <Route path='/user' component={User}/>
+                    <Route path='/' component={App}/>
                 </Switch>
             </LocaleProvider>
         </Router>
