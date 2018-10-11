@@ -49,3 +49,7 @@ export async function deleteTableList(params) {
         body: params,
     });
 }
+
+export async function getFakeList(params) {
+    return await request(`/api/fake-list?${qs.stringify(params)}`, {});
+}

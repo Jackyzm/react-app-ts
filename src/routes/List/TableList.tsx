@@ -309,7 +309,6 @@ class TableList extends React.Component<ITableListProps, {modalVisible: boolean,
 
     public render() {
         const { rule, loading } = this.props;
-        console.debug(rule);
         let data = {};
         if (rule && rule.list) {
             data = rule;

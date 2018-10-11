@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { observer, inject} from 'mobx-react';
 import { Card, Button, Icon, List } from 'antd';
 
 import Ellipsis from '../../components/Ellipsis';
@@ -6,18 +7,22 @@ import PageHeaderLayout from '../../components/PageHeaderLayout';
 
 import './CardList.less';
 
-// @connect(({ list, loading }) => ({
-//     list,
-//     loading: loading.models.list,
-// }))
-class CardList extends React.Component<{list, loading:boolean}> {
+@inject( (store: {FakeList} )=>{
+    return {
+        list: store.FakeList.list,
+        getList: store.FakeList.getList,
+        clearList: store.FakeList.clearList,
+        loading: store.FakeList.loading,
+    }
+})
+@observer
+class CardList extends React.Component<{list, loading:boolean, getList:(params)=>void, clearList: ()=>void}> {
     public componentDidMount() {
-        // this.props.dispatch({
-        //     type: 'list/fetch',
-        //     payload: {
-        //         count: 8,
-        //     },
-        // });
+        this.props.getList({count: 8});
+    }
+
+    public componentWillUnmount() {
+        this.props.clearList();
     }
 
     public render() {

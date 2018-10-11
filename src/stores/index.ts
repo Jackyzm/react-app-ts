@@ -2,7 +2,7 @@ import Home from './Home';
 import Header from './Header';
 import { Analysis, Monitor, Workplace } from './Dashboard';
 import { BasicForm } from './Form';
-import { TableList } from './List';
+import { TableList, FakeList } from './List';
 
 export default {
     Home,
@@ -11,5 +11,6 @@ export default {
     Monitor,
     Workplace,
     BasicForm,
-    TableList
+    TableList,
+    FakeList
 };

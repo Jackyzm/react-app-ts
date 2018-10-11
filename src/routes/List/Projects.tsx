@@ -1,5 +1,6 @@
 import * as React from 'react';
 import moment from 'moment';
+import { observer, inject } from 'mobx-react';
 import { Row, Col, Form, Card, Select, List } from 'antd';
 
 import TagSelect from '../../components/TagSelect';
@@ -12,19 +13,22 @@ import './Projects.less';
 const { Option } = Select;
 const FormItem = Form.Item;
 
-/* eslint react/no-array-index-key: 0 */
-// @connect(({ list, loading }) => ({
-//     list,
-//     loading: loading.models.list,
-// }))
-class CoverCardList extends React.Component<{form, list, loading: boolean,}> {
+@inject((store:{FakeList})=>{
+    return {
+        list: store.FakeList.list,
+        getList: store.FakeList.getList,
+        clearList: store.FakeList.clearList,
+        loading: store.FakeList.loading,
+    }
+})
+@observer
+class CoverCardList extends React.Component<{form, list, loading: boolean, getList:(params)=>void, clearList: ()=>void}> {
     public componentDidMount() {
-        // this.props.dispatch({
-        //     type: 'list/fetch',
-        //     payload: {
-        //         count: 8,
-        //     },
-        // });
+        this.props.getList({count: 8});
+    }
+
+    public componentWillUnmount() {
+        this.props.clearList();
     }
 
     private handleFormSubmit = () => {
@@ -33,12 +37,7 @@ class CoverCardList extends React.Component<{form, list, loading: boolean,}> {
         setTimeout(() => {
             form.validateFields(err => {
                 if (!err) {
-                    // dispatch({
-                    //     type: 'list/fetch',
-                    //     payload: {
-                    //         count: 8,
-                    //     },
-                    // });
+                    this.props.getList({count: 8});
                 }
             });
         }, 0);

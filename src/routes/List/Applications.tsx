@@ -1,5 +1,6 @@
 import * as React from 'react';
 import numeral from 'numeral';
+import { observer, inject } from 'mobx-react';
 import { Row, Col, Form, Card, Select, Icon, Avatar, List, Tooltip, Dropdown, Menu } from 'antd';
 
 import TagSelect from '../../components/TagSelect';
@@ -29,20 +30,22 @@ const formatWan = val => {
     return result;
 };
 
-/* eslint react/no-array-index-key: 0 */
-
-// @connect(({ list, loading }) => ({
-//     list,
-//     loading: loading.models.list,
-// }))
-class FilterCardList extends React.Component<{form, loading:boolean, list }> {
+@inject((store:{FakeList})=>{
+    return {
+        list: store.FakeList.list,
+        getList: store.FakeList.getList,
+        clearList: store.FakeList.clearList,
+        loading: store.FakeList.loading,
+    }
+})
+@observer
+class FilterCardList extends React.Component<{form, loading:boolean, list, getList:(params)=>void, clearList: ()=>void }> {
     public componentDidMount() {
-        // this.props.dispatch({
-        //     type: 'list/fetch',
-        //     payload: {
-        //         count: 8,
-        //     },
-        // });
+        this.props.getList({count: 8});
+    }
+
+    public componentWillUnmount() {
+        this.props.clearList();
     }
 
     private handleFormSubmit = () => {
@@ -51,13 +54,7 @@ class FilterCardList extends React.Component<{form, loading:boolean, list }> {
         setTimeout(() => {
             form.validateFields(err => {
                 if (!err) {
-                    // eslint-disable-next-line
-                    // dispatch({
-                    //     type: 'list/fetch',
-                    //     payload: {
-                    //         count: 8,
-                    //     },
-                    // });
+                    this.props.getList({count: 8});
                 }
             });
         }, 0);

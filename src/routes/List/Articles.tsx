@@ -1,5 +1,6 @@
 import * as React from 'react';
 import moment from 'moment';
+import { observer, inject } from 'mobx-react';
 import { Form, Card, Select, List, Tag, Icon, Avatar, Row, Col, Button } from 'antd';
 
 import TagSelect from '../../components/TagSelect';
@@ -11,13 +12,23 @@ const FormItem = Form.Item;
 
 const pageSize = 5;
 
-// @connect(({ list, loading }) => ({
-//     list,
-//     loading: loading.models.list,
-// }))
-class SearchList extends React.Component<{form, list, loading: boolean}> {
+@inject((store:{FakeList})=>{
+    return {
+        list: store.FakeList.list,
+        getList: store.FakeList.getList,
+        clearList: store.FakeList.clearList,
+        loading: store.FakeList.loading,
+        getMoreList: store.FakeList.getMoreList,
+    }
+})
+@observer
+class SearchList extends React.Component<{form, list, loading: boolean, getList:(params)=>void, getMoreList: (params)=>void, clearList: ()=>void}> {
     public componentDidMount() {
-        this.fetchMore();
+        this.props.getList({count: pageSize});
+    }
+
+    public componentWillUnmount() {
+        this.props.clearList();
     }
 
     private setOwner = () => {
@@ -28,12 +39,7 @@ class SearchList extends React.Component<{form, list, loading: boolean}> {
     };
 
     private fetchMore = () => {
-        // this.props.dispatch({
-        //     type: 'list/appendFetch',
-        //     payload: {
-        //         count: pageSize,
-        //     },
-        // });
+        this.props.getMoreList({count: pageSize});
     };
 
     private handleFormSubmit = (key)=> {

@@ -7,6 +7,7 @@ const charts = require('./chart');
 const userCurrent = require('../mock/api.userCurrent.json');
 const projectNotice = require('./getData').getNotice;
 const getActivities = require('./getData').getActivities;
+const getFakeList = require('./getData').getFakeList;
 const getRule = require('./rule').getRule;
 const putRule = require('./rule').putRule;
 const deleteRule = require('./rule').deleteRule;
@@ -55,6 +56,10 @@ Router.put('/table-list-put', function(req, res) {
 
 Router.post('/table-list-delete', function(req, res) {
     return res.json(deleteRule(req.body));
+});
+
+Router.get('/fake-list', function(req, res) {
+    return res.json(getFakeList(req.query));
 });
 
 module.exports = Router;

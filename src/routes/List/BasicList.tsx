@@ -1,5 +1,6 @@
 import * as React from 'react';
 import moment from 'moment';
+import { observer, inject } from 'mobx-react';
 import { List, Card, Row, Col, Radio, Input, Progress, Button, Icon, Dropdown, Menu, Avatar } from 'antd';
 
 import PageHeaderLayout from '../../components/PageHeaderLayout';
@@ -10,18 +11,21 @@ const RadioButton = Radio.Button;
 const RadioGroup = Radio.Group;
 const { Search } = Input;
 
-// @connect(({ list, loading }) => ({
-//     list,
-//     loading: loading.models.list,
-// }))
-class BasicList extends React.Component<{loading:boolean, list }> {
+@inject( (store: {FakeList} ) => {
+    return {
+        list: store.FakeList.list,
+        getList: store.FakeList.getList,
+        clearList: store.FakeList.clearList,
+        loading: store.FakeList.loading,
+    }
+})
+@observer
+class BasicList extends React.Component<{loading:boolean, list, getList:(params)=>void, clearList: ()=>void }> {
     public componentDidMount() {
-        // this.props.dispatch({
-        //     type: 'list/fetch',
-        //     payload: {
-        //         count: 5,
-        //     },
-        // });
+        this.props.getList({count: 5});
+    }
+    public componentWillUnmount() {
+        this.props.clearList();
     }
 
     public render() {
