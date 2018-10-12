@@ -65,7 +65,7 @@ class MyHeader extends React.Component<IMyHeaderProps, {}> {
             fetchNotice
         } = this.props;
         const menu = (
-            <Menu className={'menu'} selectedKeys={[]} onClick={onMenuClick}>
+            <Menu className={'menu'} selectedKeys={[]} onClick={(key)=>onMenuClick(key)}>
                 <Menu.Item disabled={true}>
                     <Icon type="user" />个人中心
                 </Menu.Item>

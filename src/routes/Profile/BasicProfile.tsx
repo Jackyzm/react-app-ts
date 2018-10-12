@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { observer, inject } from 'mobx-react';
 import { Card, Badge, Table, Divider } from 'antd';
 import DescriptionList from '../../components/DescriptionList';
 import PageHeaderLayout from '../../components/PageHeaderLayout';
@@ -40,23 +41,28 @@ const progressColumns = [
     },
 ];
 
-// @connect(({ profile, loading }) => ({
-//     profile,
-//     loading: loading.effects['profile/fetchBasic'],
-// }))
-class BasicProfile extends React.Component<{profile:{ basicGoods, basicProgress}, loading:boolean }> {
+@inject( (store: {BasicProfile}) => {
+    return {
+        profile: store.BasicProfile.list,
+        getList: store.BasicProfile.getList,
+        clearList: store.BasicProfile.clearList,
+    }
+})
+@observer
+class BasicProfile extends React.Component<{profile:{ basicGoods, basicProgress}, loading:boolean, getList: ()=>void, clearList:()=>void}> {
     public componentDidMount() {
-        // const { dispatch } = this.props;
-        // dispatch({
-        //     type: 'profile/fetchBasic',
-        // });
+        this.props.getList();
+    }
+
+    public componentWillUnmount() {
+        this.props.clearList();
     }
 
     public render() {
         const { profile={basicGoods:[],basicProgress:[]}, loading } = this.props;
         const { basicGoods, basicProgress } = profile;
         let goodsData = [];
-        if (basicGoods.length) {
+        if (basicGoods && basicGoods.length) {
             let num = 0;
             let amount = 0;
             basicGoods.forEach(item => {
@@ -69,18 +75,6 @@ class BasicProfile extends React.Component<{profile:{ basicGoods, basicProgress}
                 amount,
             });
         }
-        const renderContent = (value, row, index) => {
-            const obj = {
-                children: value,
-                props: {
-                    colSpan:0
-                },
-            };
-            if (index === basicGoods.length) {
-                obj.props.colSpan = 0;
-            }
-            return obj;
-        };
         const goodsColumns = [
             {
                 title: '商品编号',
@@ -90,32 +84,24 @@ class BasicProfile extends React.Component<{profile:{ basicGoods, basicProgress}
                     if (index < basicGoods.length) {
                         return <a href="">{text}</a>;
                     }
-                    return {
-                        children: <span style={{ fontWeight: 600 }}>总计</span>,
-                        props: {
-                            colSpan: 4,
-                        },
-                    };
+                    return <span style={{ fontWeight: 600 }}>总计</span>;
                 },
             },
             {
                 title: '商品名称',
                 dataIndex: 'name',
                 key: 'name',
-                render: renderContent,
             },
             {
                 title: '商品条码',
                 dataIndex: 'barcode',
                 key: 'barcode',
-                render: renderContent,
             },
             {
                 title: '单价',
                 dataIndex: 'price',
                 key: 'price',
                 align: 'right' as "right" | "left" | "center",
-                render: renderContent,
             },
             {
                 title: '数量（件）',
@@ -160,7 +146,7 @@ class BasicProfile extends React.Component<{profile:{ basicGoods, basicProgress}
                         <Description term="备注">无</Description>
                     </DescriptionList>
                     <Divider style={{ marginBottom: 32 }} />
-                    <div className={'title'}>退货商品</div>
+                    <div className={'title BasicProfile'}>退货商品</div>
                     <Table
                         style={{ marginBottom: 24 }}
                         pagination={false}

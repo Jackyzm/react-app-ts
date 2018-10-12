@@ -80,9 +80,7 @@ export default function request(url: string, options: object) {
         .catch(err => {
             const status = err.name;
             if (status === 401) {
-                // dispatch({
-                //     type: 'login/logout',
-                // });
+                myHistory.push('/user/login');
                 return;
             }
             if (status === 403) {

@@ -11,7 +11,6 @@ class Header {
     @action public getHeaderNotice = () => {
         getHeaderNotices().then((res)=>{
             this.list = res;
-            // console.debug(res);
         });
     };
 

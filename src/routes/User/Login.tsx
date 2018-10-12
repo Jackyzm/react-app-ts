@@ -10,7 +10,7 @@ const { TabPane } = Tabs;
 //     login,
 //     submitting: loading.effects['login/login'],
 // }))
-class LoginPage extends React.Component<{ login, submitting, form }, { type: string, autoLogin: boolean, active, count: number }> {
+class LoginPage extends React.Component<{ login, submitting, form, history }, { type: string, autoLogin: boolean, active, count: number }> {
     private interval;
     constructor(props) {
         super(props);
@@ -34,6 +34,7 @@ class LoginPage extends React.Component<{ login, submitting, form }, { type: str
         const activeFileds = active[type];
         this.props.form.validateFields(activeFileds, { force: true }, (err, values) => {
             if (!err) {
+                this.props.history.push('/');
                 // this.props.dispatch({
                 //     type: 'login/login',
                 //     payload: {

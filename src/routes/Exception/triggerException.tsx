@@ -1,11 +1,18 @@
 import * as React from 'react';
+import { observer, inject } from 'mobx-react';
 import { Button, Spin, Card } from 'antd';
 import './style.less';
 
 // @connect(state => ({
 //     isloading: state.error.isloading,
 // }))
-export default class TriggerException extends React.Component<{}, {isloading:boolean}> {
+@inject( (store: {ErrorStore}) => {
+    return {
+        setError: store.ErrorStore.setError,
+    }
+})
+@observer
+export default class TriggerException extends React.Component<{setError:(code)=>void}, {isloading:boolean}> {
     constructor(props) {
         super(props);
         this.state = {
@@ -17,12 +24,7 @@ export default class TriggerException extends React.Component<{}, {isloading:boo
         this.setState({
             isloading: true,
         });
-        // this.props.dispatch({
-        //     type: 'error/query',
-        //     payload: {
-        //         code,
-        //     },
-        // });
+        this.props.setError(code);
     };
     public render() {
         return (

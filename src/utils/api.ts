@@ -53,3 +53,15 @@ export async function deleteTableList(params) {
 export async function getFakeList(params) {
     return await request(`/api/fake-list?${qs.stringify(params)}`, {});
 }
+
+export async function getBasicProfile() {
+    return await request('/api/profile/basic', {});
+}
+
+export async function getAdvancedProfile() {
+    return await request('/api/profile/advanced', {});
+}
+
+export async function query(code) {
+    return await request(`/api/${code}`, {});
+}

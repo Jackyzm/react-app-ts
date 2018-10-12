@@ -11,6 +11,8 @@ const getFakeList = require('./getData').getFakeList;
 const getRule = require('./rule').getRule;
 const putRule = require('./rule').putRule;
 const deleteRule = require('./rule').deleteRule;
+const getProfileBasicData = require('./profile').getProfileBasicData;
+const getProfileAdvancedData = require('./profile').getProfileAdvancedData;
 
 // post 获取参数 console.log(req.body);
 // get 获取参数 console.log(req.query);
@@ -60,6 +62,30 @@ Router.post('/table-list-delete', function(req, res) {
 
 Router.get('/fake-list', function(req, res) {
     return res.json(getFakeList(req.query));
+});
+
+Router.get('/profile/basic', function(req, res) {
+    return res.json(getProfileBasicData);
+});
+
+Router.get('/profile/advanced', function(req, res) {
+    return res.json(getProfileAdvancedData);
+});
+
+Router.get('/401', function(req, res) {
+    return res.status(401).send('Sorry!');
+});
+
+Router.get('/403', function(req, res) {
+    return res.status(403).send('Sorry, 403 Forbidden!');
+});
+
+Router.get('/404', function(req, res) {
+    return res.status(404).send('Sorry, 404 Not found!');
+});
+
+Router.get('/500', function(req, res) {
+    return res.status(500).send({ error: 'something blew up' });
 });
 
 module.exports = Router;

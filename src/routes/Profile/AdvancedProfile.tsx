@@ -1,4 +1,5 @@
 import React, { Component, Fragment } from 'react';
+import { observer, inject } from 'mobx-react';
 import Debounce from 'lodash-decorators/debounce';
 import Bind from 'lodash-decorators/bind';
 import { Button, Menu, Dropdown, Icon, Row, Col, Steps, Card, Popover, Badge, Table, Tooltip, Divider } from 'antd';
@@ -164,11 +165,15 @@ const columns = [
     },
 ];
 
-// @connect(({ profile, loading }) => ({
-//     profile,
-//     loading: loading.effects['profile/fetchAdvanced'],
-// }))
-export default class AdvancedProfile extends Component<{profile, loading: boolean}, {operationkey: string, stepDirection: string}> {
+@inject( (store: {AdvancedProfile}) => {
+    return {
+        profile: store.AdvancedProfile.list,
+        getList: store.AdvancedProfile.getList,
+        clearList: store.AdvancedProfile.clearList,
+    }
+})
+@observer
+export default class AdvancedProfile extends Component<{profile, loading: boolean, getList:()=>void, clearList:()=>void }, {operationkey: string, stepDirection: string}> {
     constructor(props){
         super(props);
         this.state={
@@ -177,11 +182,7 @@ export default class AdvancedProfile extends Component<{profile, loading: boolea
         }
     }
     public componentDidMount() {
-        // const { dispatch } = this.props;
-        // dispatch({
-        //     type: 'profile/fetchAdvanced',
-        // });
-
+        this.props.getList();
         this.setStepDirection();
         window.addEventListener('resize', this.setStepDirection);
     }
@@ -189,6 +190,7 @@ export default class AdvancedProfile extends Component<{profile, loading: boolea
     public componentWillUnmount() {
         window.removeEventListener('resize', this.setStepDirection);
         // this.setStepDirection.cancel();
+        this.props.clearList();
     }
 
     private onOperationTabChange = key => {

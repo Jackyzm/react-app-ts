@@ -23,7 +23,7 @@ const passwordProgressMap = {
 //     register,
 //     submitting: loading.effects['register/submit'],
 // }))
-class Register extends React.Component<{form, submitting, register}, {count: number, confirmDirty:boolean, visible: boolean, help: string, prefix: string}> {
+class Register extends React.Component<{form, submitting, register, history}, {count: number, confirmDirty:boolean, visible: boolean, help: string, prefix: string}> {
     private interval;
     constructor(props){
         super(props);
@@ -36,7 +36,7 @@ class Register extends React.Component<{form, submitting, register}, {count: num
         }
     }
     public componentWillReceiveProps(nextProps) {
-        const account = this.props.form.getFieldValue('mail');
+        // const account = this.props.form.getFieldValue('mail');
         // if (nextProps.register.status === 'ok') {
             // this.props.dispatch(
             //     routerRedux.push({
@@ -81,6 +81,8 @@ class Register extends React.Component<{form, submitting, register}, {count: num
         e.preventDefault();
         this.props.form.validateFields({ force: true }, (err, values) => {
             if (!err) {
+                const account = this.props.form.getFieldValue('mail');
+                this.props.history.push('/user/register-result');
                 // this.props.dispatch({
                 //     type: 'register/submit',
                 //     payload: {
