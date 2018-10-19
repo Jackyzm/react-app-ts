@@ -250,7 +250,7 @@ class Pie extends React.Component<IPieProps, {legendData?, legendBlock?:boolean,
                                 {subTitle && <h4 className="pie-sub-title">{subTitle}</h4>}
                                 {/* eslint-disable-next-line */}
                                 {total && (
-                                    <div className="pie-stat">{typeof total === 'function' ? total() : total}</div>
+                                    <div className="pie-stat">{total instanceof Function ? total() : total}</div>
                                 )}
                             </div>
                         )}
