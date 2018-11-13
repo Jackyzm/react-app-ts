@@ -1,18 +1,18 @@
-@import '../../utils/utils.less';
+@import "../../utils/utils.less";
 
 .iconGroup {
     i {
         transition: color 0.32s;
-        color: rgba(0,0,0,.45);
+        color: rgba(0, 0, 0, 0.45);
         cursor: pointer;
         margin-left: 16px;
         &:hover {
-            color: rgba(0,0,0,.65);
+            color: rgba(0, 0, 0, 0.65);
         }
     }
 }
-.ant-card{
-    .content{
+.ant-card {
+    .content {
         margin: 0;
     }
 }
@@ -22,9 +22,9 @@
     list-style: none;
     li {
         .clearfix();
-            margin-top: 16px;
+        margin-top: 16px;
         span {
-            color: rgba(0,0,0,.65);
+            color: rgba(0, 0, 0, 0.65);
             font-size: 14px;
             line-height: 22px;
         }
@@ -55,7 +55,7 @@
     display: inline-block;
     margin-right: 24px;
     a {
-        color: rgba(0,0,0,.65);
+        color: rgba(0, 0, 0, 0.65);
         margin-left: 24px;
         &:hover {
             color: #1890ff;
@@ -67,12 +67,12 @@
 }
 
 .salesCard {
-  .salesBar {
-    padding: 0 0 32px 32px;
-  }
-  .salesRank {
-    padding: 0 32px 32px 72px;
-  }
+    .salesBar {
+        padding: 0 0 32px 32px;
+    }
+    .salesRank {
+        padding: 0 32px 32px 72px;
+    }
     .ant-tabs-bar {
         padding-left: 16px;
         .ant-tabs-nav .ant-tabs-tab {
@@ -91,13 +91,13 @@
 }
 
 .salesCardExtra {
-    height: 68px;
+    height: 21px;
 }
 
 .salesTypeRadio {
     position: absolute;
-    left: 24px;
-    bottom: 15px;
+    right: 54px;
+    bottom: 12px;
 }
 
 .offlineCard {
@@ -120,14 +120,14 @@
         right: 6px;
     }
 
-  .ant-tabs-tab-active h4 {
+    .ant-tabs-tab-active h4 {
         color: #1890ff;
-  }
+    }
 }
 
 .trendText {
     margin-left: 8px;
-    color: rgba(0,0,0,.85);
+    color: rgba(0, 0, 0, 0.85);
 }
 
 @media screen and (max-width: 1200px) {
@@ -145,23 +145,23 @@
 }
 
 @media screen and (max-width: 992px) {
-  .rankingTitle {
-    margin-top: 16px;
-  }
+    .rankingTitle {
+        margin-top: 16px;
+    }
 
-  .salesCard .salesBar {
-    padding: 16px;
-  }
+    .salesCard .salesBar {
+        padding: 16px;
+    }
 }
 
 @media screen and (max-width: 992px) {
-  .salesExtraWrap {
-    display: none;
-  }
+    .salesExtraWrap {
+        display: none;
+    }
 
-  .salesCard {
-      .ant-tabs-content {
-        padding-top: 30px;
-      }
-  }
+    .salesCard {
+        .ant-tabs-content {
+            padding-top: 30px;
+        }
+    }
 }

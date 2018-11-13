@@ -1,13 +1,35 @@
-import * as React from 'react';
-import { Row, Col, Icon, Card, Tabs, Table, Radio, DatePicker, Tooltip, Menu, Dropdown } from 'antd';
-import { observer, inject } from 'mobx-react';
-import numeral from 'numeral';
-import { ChartCard, yuan, MiniArea, MiniBar, MiniProgress, Field, Bar, Pie, TimelineChart } from '../../components/Charts';
-import Trend from '../../components/Trend';
-import NumberInfo from '../../components/NumberInfo';
-import { getTimeDistance } from '../../utils/utils';
+import * as React from "react";
+import {
+    Row,
+    Col,
+    Icon,
+    Card,
+    Tabs,
+    Table,
+    Radio,
+    DatePicker,
+    Tooltip,
+    Menu,
+    Dropdown
+} from "antd";
+import { observer, inject } from "mobx-react";
+import numeral from "numeral";
+import {
+    ChartCard,
+    yuan,
+    MiniArea,
+    MiniBar,
+    MiniProgress,
+    Field,
+    Bar,
+    Pie,
+    TimelineChart
+} from "../../components/Charts";
+import Trend from "../../components/Trend";
+import NumberInfo from "../../components/NumberInfo";
+import { getTimeDistance } from "../../utils/utils";
 
-import './Analysis.less';
+import "./Analysis.less";
 
 const { TabPane } = Tabs;
 const { RangePicker } = DatePicker;
@@ -16,7 +38,7 @@ const rankingListData = [];
 for (let i = 0; i < 7; i += 1) {
     rankingListData.push({
         title: `工专路 ${i} 号店`,
-        total: 323234,
+        total: 323234
     });
 }
 
@@ -24,32 +46,40 @@ const Yuan = ({ children }) => (
     <span dangerouslySetInnerHTML={{ __html: yuan(children) }} />
 );
 
-
 interface IAnalysisColumns {
-    title: string,
-    dataIndex: string,
-    key: string, render?: (text, record)=> JSX.Element,
-    sorter?: (a, b)=> number,
-    align?: "center" | "left" | "right",
-    className?: string,
+    title: string;
+    dataIndex: string;
+    key: string;
+    render?: (text, record) => JSX.Element;
+    sorter?: (a, b) => number;
+    align?: "center" | "left" | "right";
+    className?: string;
 }
 
-@inject( (store: {Analysis}) => {
+@inject((store: { Analysis }) => {
     return {
         chart: store.Analysis.chart,
         getChartsData: store.Analysis.getChartsData,
-        clearChartsData: store.Analysis.clearChartsData,
-    }
+        clearChartsData: store.Analysis.clearChartsData
+    };
 })
 @observer
-class DashboardAnalysis extends React.Component<{chart, loading: boolean, getChartsData: ()=>void, clearChartsData: ()=>void}, {rangePickerValue, salesType, currentTabKey}> {
+class DashboardAnalysis extends React.Component<
+    {
+        chart;
+        loading: boolean;
+        getChartsData: () => void;
+        clearChartsData: () => void;
+    },
+    { rangePickerValue; salesType; currentTabKey }
+> {
     constructor(props) {
         super(props);
         this.state = {
-            salesType: 'all',
-            currentTabKey: '',
-            rangePickerValue: getTimeDistance('year'),
-        }
+            salesType: "all",
+            currentTabKey: "",
+            rangePickerValue: getTimeDistance("year")
+        };
     }
 
     public componentDidMount() {
@@ -62,19 +92,19 @@ class DashboardAnalysis extends React.Component<{chart, loading: boolean, getCha
 
     private handleChangeSalesType = e => {
         this.setState({
-            salesType: e.target.value,
+            salesType: e.target.value
         });
     };
 
     private handleTabChange = key => {
         this.setState({
-            currentTabKey: key,
+            currentTabKey: key
         });
     };
 
     private handleRangePickerChange = rangePickerValue => {
         this.setState({
-            rangePickerValue,
+            rangePickerValue
         });
 
         this.props.getChartsData();
@@ -82,7 +112,7 @@ class DashboardAnalysis extends React.Component<{chart, loading: boolean, getCha
 
     private selectDate = type => {
         this.setState({
-            rangePickerValue: getTimeDistance(type),
+            rangePickerValue: getTimeDistance(type)
         });
 
         this.props.getChartsData();
@@ -94,8 +124,11 @@ class DashboardAnalysis extends React.Component<{chart, loading: boolean, getCha
         if (!rangePickerValue[0] || !rangePickerValue[1]) {
             return;
         }
-        if ( rangePickerValue[0].isSame(value[0], 'day') && rangePickerValue[1].isSame(value[1], 'day') ) {
-            return 'currentDate';
+        if (
+            rangePickerValue[0].isSame(value[0], "day") &&
+            rangePickerValue[1].isSame(value[1], "day")
+        ) {
+            return "currentDate";
         }
     }
 
@@ -111,13 +144,15 @@ class DashboardAnalysis extends React.Component<{chart, loading: boolean, getCha
             // offlineChartData,
             salesTypeData,
             salesTypeDataOnline,
-            salesTypeDataOffline,
+            salesTypeDataOffline
         } = chart;
 
         const salesPieData =
-            salesType === 'all'
+            salesType === "all"
                 ? salesTypeData
-                : salesType === 'online' ? salesTypeDataOnline : salesTypeDataOffline;
+                : salesType === "online"
+                ? salesTypeDataOnline
+                : salesTypeDataOffline;
 
         const menu = (
             <Menu>
@@ -127,7 +162,7 @@ class DashboardAnalysis extends React.Component<{chart, loading: boolean, getCha
         );
 
         const iconGroup = (
-            <span className={'iconGroup'}>
+            <span className={"iconGroup"}>
                 <Dropdown overlay={menu} placement="bottomRight">
                     <Icon type="ellipsis" />
                 </Dropdown>
@@ -135,12 +170,32 @@ class DashboardAnalysis extends React.Component<{chart, loading: boolean, getCha
         );
 
         const salesExtra = (
-            <div className={'salesExtraWrap'}>
-                <div className={'salesExtra'}>
-                    <a className={this.isActive('today')} onClick={() => this.selectDate('today')}>今日</a>
-                    <a className={this.isActive('week')} onClick={() => this.selectDate('week')}>本周</a>
-                    <a className={this.isActive('month')} onClick={() => this.selectDate('month')}>本月</a>
-                    <a className={this.isActive('year')} onClick={() => this.selectDate('year')}>全年</a>
+            <div className={"salesExtraWrap"}>
+                <div className={"salesExtra"}>
+                    <a
+                        className={this.isActive("today")}
+                        onClick={() => this.selectDate("today")}
+                    >
+                        今日
+                    </a>
+                    <a
+                        className={this.isActive("week")}
+                        onClick={() => this.selectDate("week")}
+                    >
+                        本周
+                    </a>
+                    <a
+                        className={this.isActive("month")}
+                        onClick={() => this.selectDate("month")}
+                    >
+                        本月
+                    </a>
+                    <a
+                        className={this.isActive("year")}
+                        onClick={() => this.selectDate("year")}
+                    >
+                        全年
+                    </a>
                 </div>
                 <RangePicker
                     value={rangePickerValue}
@@ -152,35 +207,35 @@ class DashboardAnalysis extends React.Component<{chart, loading: boolean, getCha
 
         const columns: IAnalysisColumns[] = [
             {
-                title: '排名',
-                dataIndex: 'index',
-                key: 'index',
+                title: "排名",
+                dataIndex: "index",
+                key: "index"
             },
             {
-                title: '搜索关键词',
-                dataIndex: 'keyword',
-                key: 'keyword',
-                render: text => <a href="/">{text}</a>,
+                title: "搜索关键词",
+                dataIndex: "keyword",
+                key: "keyword",
+                render: text => <a href="/">{text}</a>
             },
             {
-                title: '用户数',
-                dataIndex: 'count',
-                key: 'count',
+                title: "用户数",
+                dataIndex: "count",
+                key: "count",
                 sorter: (a, b) => a.count - b.count,
-                className: 'alignRight',
+                className: "alignRight"
             },
             {
-                title: '周涨幅',
-                dataIndex: 'range',
-                key: 'range',
+                title: "周涨幅",
+                dataIndex: "range",
+                key: "range",
                 sorter: (a, b) => a.range - b.range,
                 render: (text, record) => (
-                    <Trend flag={record.status === 1 ? 'down' : 'up'}>
+                    <Trend flag={record.status === 1 ? "down" : "up"}>
                         <span style={{ marginRight: 4 }}>{text}%</span>
                     </Trend>
                 ),
-                align: 'right',
-            },
+                align: "right"
+            }
         ];
 
         // const activeKey = currentTabKey || (offlineData && offlineData[0] && offlineData[0].name);
@@ -216,7 +271,7 @@ class DashboardAnalysis extends React.Component<{chart, loading: boolean, getCha
             md: 12,
             lg: 12,
             xl: 6,
-            style: { marginBottom: 24 },
+            style: { marginBottom: 24 }
         };
 
         return (
@@ -232,14 +287,19 @@ class DashboardAnalysis extends React.Component<{chart, loading: boolean, getCha
                                 </Tooltip>
                             }
                             total={() => <Yuan>126560</Yuan>}
-                            footer={<Field label="日均销售额" value={`￥${numeral(12423).format('0,0')}`} />}
+                            footer={
+                                <Field
+                                    label="日均销售额"
+                                    value={`￥${numeral(12423).format("0,0")}`}
+                                />
+                            }
                             contentHeight={46}
                         >
                             <Trend flag="up" style={{ marginRight: 16 }}>
-                                周同比<span className={'trendText'}>12%</span>
+                                周同比<span className={"trendText"}>12%</span>
                             </Trend>
                             <Trend flag="down">
-                                日环比<span className={'trendText'}>11%</span>
+                                日环比<span className={"trendText"}>11%</span>
                             </Trend>
                         </ChartCard>
                     </Col>
@@ -252,8 +312,13 @@ class DashboardAnalysis extends React.Component<{chart, loading: boolean, getCha
                                     <Icon type="info-circle-o" />
                                 </Tooltip>
                             }
-                            total={numeral(8846).format('0,0')}
-                            footer={<Field label="日访问量" value={numeral(1234).format('0,0')} />}
+                            total={numeral(8846).format("0,0")}
+                            footer={
+                                <Field
+                                    label="日访问量"
+                                    value={numeral(1234).format("0,0")}
+                                />
+                            }
                             contentHeight={46}
                         >
                             <MiniArea color="#975FE4" data={visitData || []} />
@@ -268,7 +333,7 @@ class DashboardAnalysis extends React.Component<{chart, loading: boolean, getCha
                                     <Icon type="info-circle-o" />
                                 </Tooltip>
                             }
-                            total={numeral(6560).format('0,0')}
+                            total={numeral(6560).format("0,0")}
                             footer={<Field label="转化率" value="60%" />}
                             contentHeight={46}
                         >
@@ -286,43 +351,91 @@ class DashboardAnalysis extends React.Component<{chart, loading: boolean, getCha
                             }
                             total="78%"
                             footer={
-                                <div style={{ whiteSpace: 'nowrap', overflow: 'hidden' }}>
+                                <div
+                                    style={{
+                                        whiteSpace: "nowrap",
+                                        overflow: "hidden"
+                                    }}
+                                >
                                     <Trend flag="up" style={{ marginRight: 3 }}>
-                                        周同比<span className={'trendText'}>12%</span>
+                                        周同比
+                                        <span className={"trendText"}>12%</span>
                                     </Trend>
                                     <Trend flag="down">
-                                        日环比<span className={'trendText'}>11%</span>
+                                        日环比
+                                        <span className={"trendText"}>11%</span>
                                     </Trend>
                                 </div>
                             }
                             contentHeight={46}
                         >
-                            <MiniProgress percent={78} strokeWidth={8} target={80} color="#13C2C2" />
+                            <MiniProgress
+                                percent={78}
+                                strokeWidth={8}
+                                target={80}
+                                color="#13C2C2"
+                            />
                         </ChartCard>
                     </Col>
                 </Row>
 
-                <Card loading={loading} bordered={false} bodyStyle={{ padding: 0 }}>
-                    <div className={'salesCard'}>
-                        <Tabs tabBarExtraContent={salesExtra} size="large" tabBarStyle={{ marginBottom: 24 }}>
+                <Card
+                    loading={loading}
+                    bordered={false}
+                    bodyStyle={{ padding: 0 }}
+                >
+                    <div className={"salesCard"}>
+                        <Tabs
+                            tabBarExtraContent={salesExtra}
+                            size="large"
+                            tabBarStyle={{ marginBottom: 24 }}
+                        >
                             <TabPane tab="销售额" key="sales">
                                 <Row>
-                                    <Col xl={16} lg={12} md={12} sm={24} xs={24}>
-                                        <div className={'salesBar'}>
-                                            <Bar height={295} title="销售额趋势" data={salesData} />
+                                    <Col
+                                        xl={16}
+                                        lg={12}
+                                        md={12}
+                                        sm={24}
+                                        xs={24}
+                                    >
+                                        <div className={"salesBar"}>
+                                            <Bar
+                                                height={295}
+                                                title="销售额趋势"
+                                                data={salesData}
+                                            />
                                         </div>
                                     </Col>
                                     <Col xl={8} lg={12} md={12} sm={24} xs={24}>
-                                        <div className={'salesRank'}>
-                                            <h4 className={'rankingTitle'}>门店销售额排名</h4>
-                                            <ul className={'rankingList'}>
-                                                {rankingListData.map((item, i) => (
-                                                    <li key={item.title}>
-                                                        <span className={i < 3 ? 'active' : ''}>{i + 1}</span>
-                                                        <span>{item.title}</span>
-                                                        <span>{numeral(item.total).format('0,0')}</span>
-                                                    </li>
-                                                ))}
+                                        <div className={"salesRank"}>
+                                            <h4 className={"rankingTitle"}>
+                                                门店销售额排名
+                                            </h4>
+                                            <ul className={"rankingList"}>
+                                                {rankingListData.map(
+                                                    (item, i) => (
+                                                        <li key={item.title}>
+                                                            <span
+                                                                className={
+                                                                    i < 3
+                                                                        ? "active"
+                                                                        : ""
+                                                                }
+                                                            >
+                                                                {i + 1}
+                                                            </span>
+                                                            <span>
+                                                                {item.title}
+                                                            </span>
+                                                            <span>
+                                                                {numeral(
+                                                                    item.total
+                                                                ).format("0,0")}
+                                                            </span>
+                                                        </li>
+                                                    )
+                                                )}
                                             </ul>
                                         </div>
                                     </Col>
@@ -330,22 +443,50 @@ class DashboardAnalysis extends React.Component<{chart, loading: boolean, getCha
                             </TabPane>
                             <TabPane tab="访问量" key="views">
                                 <Row>
-                                    <Col xl={16} lg={12} md={12} sm={24} xs={24}>
-                                        <div className={'salesBar'}>
-                                            <Bar height={292} title="访问量趋势" data={salesData} />
+                                    <Col
+                                        xl={16}
+                                        lg={12}
+                                        md={12}
+                                        sm={24}
+                                        xs={24}
+                                    >
+                                        <div className={"salesBar"}>
+                                            <Bar
+                                                height={292}
+                                                title="访问量趋势"
+                                                data={salesData}
+                                            />
                                         </div>
                                     </Col>
                                     <Col xl={8} lg={12} md={12} sm={24} xs={24}>
-                                        <div className={'salesRank'}>
-                                            <h4 className={'rankingTitle'}>门店访问量排名</h4>
-                                            <ul className={'rankingList'}>
-                                                {rankingListData.map((item, i) => (
-                                                    <li key={item.title}>
-                                                        <span className={i < 3 ? 'active' : ''}>{i + 1}</span>
-                                                        <span>{item.title}</span>
-                                                        <span>{numeral(item.total).format('0,0')}</span>
-                                                    </li>
-                                                ))}
+                                        <div className={"salesRank"}>
+                                            <h4 className={"rankingTitle"}>
+                                                门店访问量排名
+                                            </h4>
+                                            <ul className={"rankingList"}>
+                                                {rankingListData.map(
+                                                    (item, i) => (
+                                                        <li key={item.title}>
+                                                            <span
+                                                                className={
+                                                                    i < 3
+                                                                        ? "active"
+                                                                        : ""
+                                                                }
+                                                            >
+                                                                {i + 1}
+                                                            </span>
+                                                            <span>
+                                                                {item.title}
+                                                            </span>
+                                                            <span>
+                                                                {numeral(
+                                                                    item.total
+                                                                ).format("0,0")}
+                                                            </span>
+                                                        </li>
+                                                    )
+                                                )}
                                             </ul>
                                         </div>
                                     </Col>
@@ -365,24 +506,41 @@ class DashboardAnalysis extends React.Component<{chart, loading: boolean, getCha
                             style={{ marginTop: 24 }}
                         >
                             <Row gutter={68}>
-                                <Col sm={12} xs={24} style={{ marginBottom: 24 }}>
+                                <Col
+                                    sm={12}
+                                    xs={24}
+                                    style={{ marginBottom: 24 }}
+                                >
                                     <NumberInfo
                                         subTitle={
                                             <span>
                                                 搜索用户数
                                                 <Tooltip title="指标文案">
-                                                    <Icon style={{ marginLeft: 8 }} type="info-circle-o" />
+                                                    <Icon
+                                                        style={{
+                                                            marginLeft: 8
+                                                        }}
+                                                        type="info-circle-o"
+                                                    />
                                                 </Tooltip>
                                             </span>
                                         }
                                         gap={8}
-                                        total={numeral(12321).format('0,0')}
+                                        total={numeral(12321).format("0,0")}
                                         status="up"
                                         subTotal={17.1}
                                     />
-                                    <MiniArea line={true} height={45} data={visitData2} />
+                                    <MiniArea
+                                        line={true}
+                                        height={45}
+                                        data={visitData2}
+                                    />
                                 </Col>
-                                <Col sm={12} xs={24} style={{ marginBottom: 24 }}>
+                                <Col
+                                    sm={12}
+                                    xs={24}
+                                    style={{ marginBottom: 24 }}
+                                >
                                     <NumberInfo
                                         subTitle="人均搜索次数"
                                         total={2.7}
@@ -390,7 +548,11 @@ class DashboardAnalysis extends React.Component<{chart, loading: boolean, getCha
                                         subTotal={26.2}
                                         gap={8}
                                     />
-                                    <MiniArea line={true} height={45} data={visitData2} />
+                                    <MiniArea
+                                        line={true}
+                                        height={45}
+                                        data={visitData2}
+                                    />
                                 </Col>
                             </Row>
                             <Table
@@ -400,7 +562,7 @@ class DashboardAnalysis extends React.Component<{chart, loading: boolean, getCha
                                 dataSource={searchData}
                                 pagination={{
                                     style: { marginBottom: 0 },
-                                    pageSize: 5,
+                                    pageSize: 5
                                 }}
                             />
                         </Card>
@@ -408,31 +570,50 @@ class DashboardAnalysis extends React.Component<{chart, loading: boolean, getCha
                     <Col xl={12} lg={24} md={24} sm={24} xs={24}>
                         <Card
                             loading={loading}
-                            className={'salesCard'}
+                            className={"salesCard"}
                             bordered={false}
                             title="销售额类别占比"
                             bodyStyle={{ padding: 24 }}
                             extra={
-                                <div className={'salesCardExtra'}>
+                                <div className={"salesCardExtra"}>
                                     {iconGroup}
-                                    <div className={'salesTypeRadio'}>
-                                        <Radio.Group value={salesType} onChange={this.handleChangeSalesType}>
-                                            <Radio.Button value="all">全部渠道</Radio.Button>
-                                            <Radio.Button value="online">线上</Radio.Button>
-                                            <Radio.Button value="offline">门店</Radio.Button>
+                                    <div className={"salesTypeRadio"}>
+                                        <Radio.Group
+                                            value={salesType}
+                                            onChange={
+                                                this.handleChangeSalesType
+                                            }
+                                        >
+                                            <Radio.Button value="all">
+                                                全部渠道
+                                            </Radio.Button>
+                                            <Radio.Button value="online">
+                                                线上
+                                            </Radio.Button>
+                                            <Radio.Button value="offline">
+                                                门店
+                                            </Radio.Button>
                                         </Radio.Group>
                                     </div>
                                 </div>
                             }
                             style={{ marginTop: 24, minHeight: 509 }}
                         >
-                            <h4 style={{ marginTop: 8, marginBottom: 32 }}>销售额</h4>
+                            <h4 style={{ marginTop: 8, marginBottom: 32 }}>
+                                销售额
+                            </h4>
                             <Pie
                                 hasLegend={true}
                                 subTitle="销售额"
-                                total={
-                                    () => <Yuan>{salesPieData && salesPieData.reduce((pre, now) => now.y + pre, 0)}</Yuan>
-                                }
+                                total={() => (
+                                    <Yuan>
+                                        {salesPieData &&
+                                            salesPieData.reduce(
+                                                (pre, now) => now.y + pre,
+                                                0
+                                            )}
+                                    </Yuan>
+                                )}
                                 data={salesPieData || []}
                                 valueFormat={value => <Yuan>{value}</Yuan>}
                                 height={248}

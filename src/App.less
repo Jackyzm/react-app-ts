@@ -1,17 +1,16 @@
- #root {
+#root {
     canvas {
         display: block;
     }
     height: 100%;
-    >.ant-layout {
-        height: 100% !important;
+    > .ant-layout {
         overflow: hidden;
         .trigger {
             font-size: 18px;
             line-height: 64px;
             padding: 0 24px;
             cursor: pointer;
-            transition: color .3s;
+            transition: color 0.3s;
         }
         .trigger:hover {
             color: #1890ff;
@@ -37,6 +36,31 @@
                 margin: 0 0 0 12px;
                 font-weight: 600;
             }
-          }
+        }
     }
+}
+html,
+body,
+#root {
+    height: 100%;
+}
+
+canvas {
+    display: block;
+}
+
+body {
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.globalSpin {
+    width: 100%;
+    margin: 40px 0 !important;
+}
+
+// temp fix for https://github.com/ant-design/ant-design/commit/a1fafb5b727b62cb0be29ce6e9eca8f579d4f8b7
+.ant-spin-container {
+    overflow: visible !important;
 }

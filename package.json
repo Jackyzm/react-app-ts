@@ -6,7 +6,7 @@
     "scripts": {
         "build": "rimraf dist && webpack --config webpack.prod.js --profile",
         "start": "webpack-dev-server --config webpack.dev.js --colors",
-        "serve": "nodemon ./server/server.js"
+        "serve": "node ./server/server.js"
     },
     "author": "Jackyzm",
     "license": "MIT",
@@ -23,6 +23,7 @@
         "react": "^16.4.1",
         "react-dom": "^16.4.1",
         "react-fittext": "^1.0.0",
+        "react-loadable": "^5.5.0",
         "react-router-dom": "^4.3.1",
         "typescript": "^3.1.3",
         "whatwg-fetch": "^2.0.4"
