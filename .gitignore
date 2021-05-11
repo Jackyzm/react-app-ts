@@ -16,6 +16,5 @@ build
 npm-debug.log
 compilation-stats.json
 /dist
-yarn.lock
 
 .vscode/
